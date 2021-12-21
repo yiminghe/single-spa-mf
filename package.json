@@ -1,0 +1,18 @@
+{
+  "name": "micro-frontend-demo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "reinstall": "rm -rf node_modules yarn.lock && ayarn",
+    "start:app": "cd packages/main-app && yarn start",
+    "start:app2": "cd packages/app2 && yarn start",
+    "start:app1": "cd packages/app1 && yarn start",
+    "start": "concurrently 'yarn:start:*'"
+  },
+  "devDependencies": {
+    "concurrently": "6.x"
+  },
+  "packageManager": "yarn@3.1.1"
+}
