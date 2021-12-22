@@ -8,16 +8,28 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 const loading = document.getElementById('loading');
 
-async function load(fn) {
-  let finish = false;
-  setTimeout(() => {
-    if (!finish) {
-      loading.style.display = 'block';
-    }
+let loadingTimeout;
+
+async function load(fn, tag) {
+  //console.log('start', tag);
+  let showed = false;
+  if (loadingTimeout) {
+    clearTimeout(loadingTimeout);
+  }
+  loadingTimeout = setTimeout(() => {
+    showed = true;
+    loading.style.display = 'block';
   }, 100);
+  let localTimeout = loadingTimeout;
   const ret = await fn();
-  finish = true;
-  loading.style.display = 'none';
+  if (loadingTimeout === localTimeout) {
+    clearTimeout(loadingTimeout);
+    loadingTimeout = null;
+    if (showed) {
+      loading.style.display = 'none';
+    }
+  }
+  //console.log('end', tag);
   return ret;
 }
 
@@ -35,7 +47,7 @@ function isApp2(location) {
 
 registerApplication(
   'home',
-  () => load(() => import('./Home')),
+  () => load(() => import('./Home'), 'home'),
   (location) => {
     return !isApp1(location) && !isApp2(location);
   },
@@ -44,14 +56,14 @@ registerApplication(
 
 registerApplication(
   'app1',
-  () => load(() => importApp('http://localhost:3002/app1Entry.js')),
+  () => load(() => importApp('http://localhost:3002/app1Entry.js'), 'app1'),
   isApp1,
   customProps,
 );
 
 registerApplication(
   'app2',
-  () => load(() => importApp('http://localhost:3003/app2Entry.js')),
+  () => load(() => importApp('http://localhost:3003/app2Entry.js'), 'app2'),
   isApp2,
   customProps,
 );
