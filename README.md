@@ -5,7 +5,7 @@ react + react-router + styled-components + single-spa + module federation + yarn
 ### run
 
 ```
-nvm install node-v16.13.1
+nvm install 16.13.1
 corepack enable
 yarn
 yarn dlx @yarnpkg/sdks vscode
