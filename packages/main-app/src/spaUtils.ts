@@ -2,6 +2,7 @@ import {
   addErrorHandler,
   checkActivityFunctions,
   getAppNames,
+  navigateToUrl,
 } from 'single-spa';
 
 // @ts-ignore
@@ -9,22 +10,24 @@ export let publicPath = __webpack_public_path__;
 
 publicPath = new URL(publicPath).pathname;
 
+const resolvedPromise = Promise.resolve();
+
 export function getLoader(handles: AppHandles) {
   async function load<T>(fn: () => Promise<T>, id: string): Promise<T> {
     const applicationElement = getApplicationElement(id)!;
     const handle = handles[id];
-    let showed = false;
+    let showed: Promise<void> | undefined;
     let loadingTimeout = setTimeout(() => {
-      showed = true;
       if (handle) {
-        handle.mount(applicationElement);
+        showed = handle.mount(applicationElement) || resolvedPromise;
       }
     }, 100);
     try {
       const ret = await fn();
       if (showed) {
+        await showed;
         if (handle) {
-          handle.unmount(applicationElement);
+          await handle.unmount(applicationElement);
         }
       }
       return ret;
@@ -82,30 +85,41 @@ interface AppHandle {
 type AppHandles = Record<string, AppHandle>;
 
 export function addErrorAppHandles(handles: AppHandles) {
-  const errors: Record<string, HTMLElement> = {};
+  const errors: Record<string, {
+    applicationElement: HTMLElement,
+    mountPromise: Promise<void>;
+  }> = {};
 
   addErrorHandler((err) => {
     const id = err.appOrParcelName;
     const applicationElement = getApplicationElement(id)!;
     const handle = handles[id];
     if (handle) {
-      handle.mount(applicationElement);
-      errors[id] = applicationElement;
+      const mountPromise = handle.mount(applicationElement) || resolvedPromise;
+      errors[id] = { applicationElement, mountPromise };
     }
   });
 
   window.addEventListener(
     'single-spa:before-routing-event',
-    ({ detail: { newUrl } }: any) => {
+    ({ detail: { newUrl, cancelNavigation } }: any) => {
+      const promises: Promise<void>[] = [];
       getAppsToUnmount(newUrl).forEach((name) => {
         if (errors[name]) {
           const handle = handles[name];
           if (handle) {
-            handle.unmount(errors[name]);
+            promises.push(errors[name].mountPromise);
+            promises.push(handle.unmount(errors[name].applicationElement) || resolvedPromise);
           }
           delete errors[name];
         }
       });
+      if (promises.length) {
+        cancelNavigation();
+        Promise.all(promises).then(() => {
+          navigateToUrl(newUrl);
+        });
+      }
     },
   );
 }
