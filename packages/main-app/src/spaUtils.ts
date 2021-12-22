@@ -12,7 +12,7 @@ publicPath = new URL(publicPath).pathname;
 
 const resolvedPromise = Promise.resolve();
 
-export function getLoader(handles: AppHandles) {
+export function getLoader(handles: AppHandles = {}) {
   async function load<T>(fn: () => Promise<T>, id: string): Promise<T> {
     const applicationElement = getApplicationElement(id)!;
     const handle = handles[id];
@@ -84,11 +84,14 @@ interface AppHandle {
 
 type AppHandles = Record<string, AppHandle>;
 
-export function addErrorAppHandles(handles: AppHandles) {
-  const errors: Record<string, {
-    applicationElement: HTMLElement,
-    mountPromise: Promise<void>;
-  }> = {};
+export function addErrorAppHandles(handles: AppHandles = {}) {
+  const errors: Record<
+    string,
+    {
+      applicationElement: HTMLElement;
+      mountPromise: Promise<void>;
+    }
+  > = {};
 
   addErrorHandler((err) => {
     const id = err.appOrParcelName;
@@ -109,7 +112,10 @@ export function addErrorAppHandles(handles: AppHandles) {
           const handle = handles[name];
           if (handle) {
             promises.push(errors[name].mountPromise);
-            promises.push(handle.unmount(errors[name].applicationElement) || resolvedPromise);
+            promises.push(
+              handle.unmount(errors[name].applicationElement) ||
+                resolvedPromise,
+            );
           }
           delete errors[name];
         }
