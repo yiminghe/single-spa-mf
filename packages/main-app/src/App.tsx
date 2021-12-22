@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { navigateToUrl } from 'single-spa';
-import { publicPath } from './utils';
+import { publicPath } from './spaUtils';
 import { Button } from './Button';
 
 const App = () => {
@@ -31,20 +31,16 @@ const App = () => {
         <Button onClick={onClick} data-href={publicPath + 'app1'}>
           app1
         </Button>
+        &nbsp;
+        <Button onClick={onClick} data-href={publicPath + 'notFound'}>
+          notFound
+        </Button>
       </div>
       <div>
-        <div id="loading">
-          <div className="spinner">
-            <div className="rect1"></div>
-            <div className="rect2"></div>
-            <div className="rect3"></div>
-            <div className="rect4"></div>
-            <div className="rect5"></div>
-          </div>
-        </div>
-        <div id="single-spa-application:home"></div>
+        <div id="single-spa-application:main"></div>
         <div id="single-spa-application:app1"></div>
         <div id="single-spa-application:app2"></div>
+        <div id="single-spa-application:notFound"></div>
       </div>
     </>
   );

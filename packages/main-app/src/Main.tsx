@@ -2,9 +2,9 @@ import React from 'react';
 import singleSpaReact from 'single-spa-react';
 import ReactDOM from 'react-dom';
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
-import { publicPath } from './utils';
+import { publicPath } from './spaUtils';
 
-const Home = () => {
+const Main = () => {
   return (
     <BrowserRouter>
       <div>
@@ -18,14 +18,14 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Main;
 
-const HomeSpa = singleSpaReact({
+const MainSpa = singleSpaReact({
   React,
   ReactDOM,
-  rootComponent: Home,
+  rootComponent: Main,
 });
 
-export const bootstrap = HomeSpa.bootstrap;
-export const mount = HomeSpa.mount;
-export const unmount = HomeSpa.unmount;
+export const bootstrap = MainSpa.bootstrap;
+export const mount = MainSpa.mount;
+export const unmount = MainSpa.unmount;
