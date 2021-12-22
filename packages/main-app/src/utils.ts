@@ -1,11 +1,11 @@
 export let publicPath = __webpack_public_path__;
 
-publicPath = (new URL(publicPath).pathname);
+publicPath = new URL(publicPath).pathname;
 
-console.log('publicPath',publicPath);
+console.log('publicPath', publicPath);
 
-export async function importApp(entry:string,module:string='main') {
-  const appNS = entry.match(/\/(\w+)Entry\.js$/)[1]+'App';
+export async function importApp(entry: string, module: string = 'main') {
+  const appNS = entry.match(/\/(\w+)Entry\.js$/)[1] + 'App';
   let container: any = window[appNS];
   if (!container) {
     await loadScript(entry, appNS);
@@ -26,7 +26,10 @@ function loadScript(url, ns) {
     const scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
       const s = scripts[i];
-      if (s.getAttribute('src') == url || s.getAttribute(dataKey) == ns) { script = s; break; }
+      if (s.getAttribute('src') == url || s.getAttribute(dataKey) == ns) {
+        script = s;
+        break;
+      }
     }
     let needAttach;
     if (!script) {
@@ -52,7 +55,13 @@ function loadScript(url, ns) {
       }
       prev && prev(event);
     };
-    const timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
+    const timeout = setTimeout(
+      onScriptComplete.bind(null, undefined, {
+        type: 'timeout',
+        target: script,
+      }),
+      120000,
+    );
     script.onerror = onScriptComplete.bind(null, script.onerror);
     script.onload = onScriptComplete.bind(null, script.onload);
     needAttach && document.head.appendChild(script);

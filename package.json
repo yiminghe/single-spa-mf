@@ -5,14 +5,16 @@
     "packages/*"
   ],
   "scripts": {
+    "prettier": "prettier --write \"packages/**/*.{js,tsx,ts,jsx}\"",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
-    "start:app": "cd packages/main-app && yarn start",
-    "start:app2": "cd packages/app2 && yarn start",
-    "start:app1": "cd packages/app1 && yarn start",
+    "start:app": "yarn workspace main-app start",
+    "start:app2": "yarn workspace app2 start",
+    "start:app1": "yarn workspace app1 start",
     "start": "concurrently 'yarn:start:*'"
   },
   "devDependencies": {
-    "concurrently": "6.x"
+    "concurrently": "6.x",
+    "prettier": "2.x"
   },
   "packageManager": "yarn@3.1.1"
 }

@@ -3141,6 +3141,7 @@ __metadata:
   resolution: "micro-frontend-demo@workspace:."
   dependencies:
     concurrently: 6.x
+    prettier: 2.x
   languageName: unknown
   linkType: soft
 
@@ -3672,6 +3673,15 @@ __metadata:
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"
   checksum: 819ffab0c9d51cf0acbabf8996dffbfafbafa57afc0e4c98db88b67f2094cb44488758f06e5da95d7036f19556a4a732525e84289a425f4f6fd8e412a9d7442f
+  languageName: node
+  linkType: hard
+
+"prettier@npm:2.x":
+  version: 2.5.1
+  resolution: "prettier@npm:2.5.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fprettier%2Fdownload%2Fprettier-2.5.1.tgz"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
   languageName: node
   linkType: hard
 
