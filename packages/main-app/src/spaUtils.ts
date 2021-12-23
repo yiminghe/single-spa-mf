@@ -5,11 +5,6 @@ import {
   navigateToUrl,
 } from 'single-spa';
 
-// @ts-ignore
-export let publicPath = __webpack_public_path__;
-
-publicPath = new URL(publicPath).pathname;
-
 const resolvedPromise = Promise.resolve();
 
 export function getLoader(handles: AppHandles = {}) {

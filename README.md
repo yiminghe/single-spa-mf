@@ -9,6 +9,8 @@ nvm install 16.13.1
 corepack enable
 yarn
 yarn dlx @yarnpkg/sdks vscode
+yarn plugin import typescript
+yarn plugin import version
 yarn start
 ```
 

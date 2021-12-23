@@ -2,7 +2,7 @@ import React from 'react';
 import singleSpaReact from 'single-spa-react';
 import ReactDOM from 'react-dom';
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
-import { publicPath } from './spaUtils';
+import { publicPath } from 'common';
 
 const Main = () => {
   return (

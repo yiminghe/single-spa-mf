@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { navigateToUrl } from 'single-spa';
-import { publicPath } from './spaUtils';
+import { publicPath } from 'common';
 import { Button } from './Button';
 
 const App = () => {

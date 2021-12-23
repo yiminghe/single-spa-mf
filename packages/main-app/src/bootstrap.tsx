@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { registerApplication, start } from 'single-spa';
-import { publicPath, getLoader, addErrorAppHandles } from './spaUtils';
+import { getLoader, addErrorAppHandles } from './spaUtils';
+import { publicPath } from 'common';
 
 const mainAppName = 'main';
 

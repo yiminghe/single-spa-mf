@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { registerApplication, start } from 'single-spa';
-
-export let publicPath = __webpack_public_path__;
-
-publicPath = new URL(publicPath).pathname;
+import { publicPath } from 'common';
 
 const customProps = {
   publicPath,

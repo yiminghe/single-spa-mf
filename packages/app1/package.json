@@ -6,6 +6,7 @@
     "@types/react": "17.x",
     "@types/react-dom": "17.x",
     "@types/styled-components": "5.x",
+    "common": "~0.0.4",
     "react": "17.x",
     "react-dom": "17.x",
     "react-is": "17.x",

@@ -1146,6 +1146,7 @@ __metadata:
     "@types/react-dom": 17.x
     "@types/styled-components": 5.x
     babel-loader: 8.x
+    common: ~0.0.4
     html-webpack-plugin: 5.x
     react: 17.x
     react-dom: 17.x
@@ -1172,6 +1173,7 @@ __metadata:
     "@types/react-dom": 17.x
     "@types/styled-components": 5.x
     babel-loader: 8.x
+    common: ~0.0.4
     html-webpack-plugin: 5.x
     react: 17.x
     react-dom: 17.x
@@ -1619,6 +1621,12 @@ __metadata:
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
   languageName: node
   linkType: hard
+
+"common@workspace:packages/common, common@~0.0.4":
+  version: 0.0.0-use.local
+  resolution: "common@workspace:packages/common"
+  languageName: unknown
+  linkType: soft
 
 "commondir@npm:^1.0.1":
   version: 1.0.1
@@ -3173,6 +3181,7 @@ __metadata:
     "@types/react-dom": 17.x
     "@types/styled-components": 5.x
     babel-loader: 8.x
+    common: ~0.0.4
     html-webpack-plugin: 5.x
     react: 17.x
     react-dom: 17.x
