@@ -1147,7 +1147,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: ~0.0.2
+    single-spa-mf: 0.0.3
     single-spa-react: 4.x
     styled-components: 5.x
     typescript: 4.x
@@ -1169,7 +1169,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: ~0.0.2
+    single-spa-mf: 0.0.3
     single-spa-react: 4.x
     styled-components: 5.x
     typescript: 4.x
@@ -3173,7 +3173,7 @@ __metadata:
     react-is: 17.x
     react-router-dom: 6.x
     single-spa: 5.x
-    single-spa-mf: ~0.0.2
+    single-spa-mf: 0.0.3
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -3271,6 +3271,7 @@ __metadata:
     concurrently: 6.x
     html-webpack-plugin: 5.x
     prettier: 2.x
+    single-spa-mf: 0.0.3
     typescript: 4.x
     webpack: 5.x
   languageName: unknown
@@ -4390,7 +4391,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@workspace:packages/single-spa-mf, single-spa-mf@~0.0.2":
+"single-spa-mf@0.0.3, single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:

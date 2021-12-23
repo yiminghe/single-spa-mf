@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const mfWebpack = require('single-spa-mf/pkg/webpack');
 
 function cap(s) {
   return s[0].toUpperCase() + s.slice(1);
@@ -46,9 +47,8 @@ module.exports = ({ dir, app, port, main }) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: `${app}App`,
+      ...mfWebpack.getAppConfig({app}),
       ...(main ? {} : {
-        filename: `${app}Entry.js`,
         exposes: {
           main: `${dir}/src/${cap(app)}Page`,
         },
