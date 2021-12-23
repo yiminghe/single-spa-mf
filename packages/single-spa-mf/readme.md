@@ -21,6 +21,7 @@ interface AppHandle {
 }
 declare type AppHandles = Record<string, AppHandle>;
 export declare function addErrorAppHandles(handles?: AppHandles): void;
+```
 
 ### demo
 
