@@ -2,7 +2,10 @@ import {
   addErrorHandler,
   checkActivityFunctions,
   getAppNames,
+  registerApplication as registerApplication2,
   navigateToUrl,
+  LifeCycles,
+  start,
 } from 'single-spa';
 
 const resolvedPromise = Promise.resolve();
@@ -36,9 +39,29 @@ export function getLoader(handles: AppHandles = {}) {
     return load(() => importApp(app, entry, module), app);
   }
 
+
+  function registerApplication(app: string, path: string, check: (l: Location) => boolean, customProps: any) {
+    registerApplication2(
+      app,
+      () => loadApp(`${path}/${app}Entry.js`),
+      check,
+      customProps,
+    );
+  }
+
+  function registerMainApplication(app: string, loader: () => Promise<LifeCycles<any>>, check: (l: Location) => boolean, customProps: any) {
+    registerApplication2(
+      app,
+      () => load(() => loader(), app),
+      check,
+      customProps,
+    );
+  }
+
   return {
-    load,
-    loadApp,
+    registerApplication,
+    registerMainApplication,
+    start,
   };
 }
 
@@ -109,7 +132,7 @@ export function addErrorAppHandles(handles: AppHandles = {}) {
             promises.push(errors[name].mountPromise);
             promises.push(
               handle.unmount(errors[name].applicationElement) ||
-                resolvedPromise,
+              resolvedPromise,
             );
           }
           delete errors[name];

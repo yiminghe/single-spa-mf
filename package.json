@@ -5,6 +5,8 @@
     "packages/*"
   ],
   "scripts": {
+    "pub": "yarn workspace single-spa-mf run pub",
+    "build": "yarn workspace single-spa-mf run build",
     "prettier": "prettier --write \"packages/**/*.{js,tsx,ts,jsx}\"",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "start:app": "yarn workspace main start",

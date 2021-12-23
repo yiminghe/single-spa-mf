@@ -1147,9 +1147,10 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa: 5.x
+    single-spa-mf: ~0.0.2
     single-spa-react: 4.x
     styled-components: 5.x
+    typescript: 4.x
     webpack: 5.x
     webpack-cli: 4.x
     webpack-dev-server: 4.x
@@ -1168,9 +1169,10 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa: 5.x
+    single-spa-mf: ~0.0.2
     single-spa-react: 4.x
     styled-components: 5.x
+    typescript: 4.x
     webpack: 5.x
     webpack-cli: 4.x
     webpack-dev-server: 4.x
@@ -3171,6 +3173,7 @@ __metadata:
     react-is: 17.x
     react-router-dom: 6.x
     single-spa: 5.x
+    single-spa-mf: ~0.0.2
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -4386,6 +4389,15 @@ __metadata:
   checksum: b819ac81ba757af559dad0804233ae31bf6f054591cd8a671e9cbcf09f21c72ec3076fe87d1e04861f5b33b47d63f0694b568de99c99cd733ee2060515beb6d5
   languageName: node
   linkType: hard
+
+"single-spa-mf@workspace:packages/single-spa-mf, single-spa-mf@~0.0.2":
+  version: 0.0.0-use.local
+  resolution: "single-spa-mf@workspace:packages/single-spa-mf"
+  dependencies:
+    single-spa: 5.x
+    typescript: 4.x
+  languageName: unknown
+  linkType: soft
 
 "single-spa-react@npm:4.x":
   version: 4.6.0

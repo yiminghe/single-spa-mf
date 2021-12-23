@@ -46,6 +46,4 @@ const App = () => {
   );
 };
 
-export default () => {
-  return <App />;
-};
+export default App;

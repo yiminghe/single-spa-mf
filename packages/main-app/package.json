@@ -12,6 +12,7 @@
     "react-is": "17.x",
     "react-router-dom": "6.x",
     "single-spa": "5.x",
+    "single-spa-mf": "~0.0.2",
     "single-spa-react": "4.x",
     "styled-components": "5.x"
   },

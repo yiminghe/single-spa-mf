@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { registerApplication, start } from 'single-spa';
 import { publicPath } from 'common';
+import { getLoader } from 'single-spa-mf';
 
 const customProps = {
   publicPath,
 };
 
-registerApplication(
+const { registerMainApplication, start } = getLoader();
+
+registerMainApplication(
   'app2',
   () => import('./App2Page'),
   () => true,

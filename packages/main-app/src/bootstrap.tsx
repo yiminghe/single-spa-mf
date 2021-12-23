@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { registerApplication, start } from 'single-spa';
-import { getLoader, addErrorAppHandles } from './spaUtils';
+import { getLoader, addErrorAppHandles } from 'single-spa-mf';
 import { publicPath } from 'common';
 
 const mainAppName = 'main';
@@ -57,7 +56,7 @@ apps.app1.port = 3002;
 apps.app2.port = 3003;
 apps.notFound.port = 3004;
 
-const { load, loadApp } = getLoader(
+const { registerApplication, registerMainApplication, start } = getLoader(
   appNames.reduce(
     (ret, c) => ({
       ...ret,
@@ -93,19 +92,14 @@ function notApp(location: Location) {
   return true;
 }
 
-registerApplication(
-  mainAppName,
-  () => load(() => import('./Main'), mainAppName),
-  notApp,
-  customProps,
-);
+registerMainApplication(mainAppName, () => import('./Main'), notApp, customProps);
 
 for (const app of appNames) {
   if (app !== mainAppName) {
     const info = apps[app];
     registerApplication(
       app,
-      () => loadApp(`http://localhost:${info.port}/${app}Entry.js`),
+      `http://localhost:${info.port}`,
       info.check,
       customProps,
     );

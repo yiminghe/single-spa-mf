@@ -1,0 +1,24 @@
+{
+  "name": "single-spa-mf",
+  "description": "combine single-spa with module federation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yiminghe/micro-frontend-demo"
+  },
+  "files": [
+    "pkg"
+  ],
+  "version": "0.0.2",
+  "module": "pkg/index.js",
+  "types": "pkg/index.d.ts",
+  "scripts": {
+    "pub": "yarn run build && npm publish",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "4.x"
+  },
+  "dependencies": {
+    "single-spa": "5.x"
+  }
+}
