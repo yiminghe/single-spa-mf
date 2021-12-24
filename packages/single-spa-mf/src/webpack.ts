@@ -1,7 +1,10 @@
-import { getMFAppEntry, getMFAppVar } from "./utils";
+import { getMFAppEntry, getMFAppVar, mainModule } from "./utils";
 
-// @ts-ignore 
-export const getMFAppConfig =({ app }:{app:string}) => ({
+export const getMFAppConfig = ({ app }: { app: string }) => ({
   name: getMFAppVar(app),
   filename: `${getMFAppEntry(app)}`,
+});
+
+export const getMFExposes = (mod: string) => ({
+  [mainModule]: mod
 });

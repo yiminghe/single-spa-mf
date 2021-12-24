@@ -4,8 +4,8 @@ function cap(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
-const isEnvProduction=!!process.env.BUILD;
-const hash=true;
+const isEnvProduction = !!process.env.BUILD;
+const hash = true;
 
 module.exports = ({ dir, app, port, main, require }) => {
   const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -69,7 +69,7 @@ module.exports = ({ dir, app, port, main, require }) => {
         ...mfWebpack.getMFAppConfig({ app }),
         ...(main ? {} : {
           exposes: {
-            main: `${dir}/src/${cap(app)}Page`,
+            ...mfWebpack.getMFExposes(`${dir}/src/${cap(app)}Page`),
           },
         }),
         shared: [

@@ -6,7 +6,7 @@ import {
   navigateToUrl,
   LifeCycles,
 } from 'single-spa';
-import { getMFAppEntry, getMFAppVar } from './utils';
+import { getMFAppEntry, getMFAppVar, mainModule, getMFAppMD5Key } from './utils';
 import * as webpack from './webpack';
 // @ts-ignore
 import md5 from 'blueimp-md5';
@@ -64,7 +64,7 @@ export function initMFApps(apps: MFApps) {
   }
 
   async function loadApp(appName: string, app: MFApp) {
-    return load(() => importApp(appName, app, 'main'), appName);
+    return load(() => importApp(appName, app, mainModule), appName);
   }
 
 
@@ -174,9 +174,6 @@ function getAppsToUnmount(newUrl: string | undefined) {
   return appsToUnmount;
 }
 
-function getStorageKey(app: string) {
-  return `${app}MFAppMD5`;
-}
 
 async function importApp(appName: string, app: MFApp, module: string) {
   const appNS: any = getMFAppVar(appName);
@@ -192,7 +189,7 @@ async function importApp(appName: string, app: MFApp, module: string) {
       });
       const content = await response.text();
       const contentMd5 = md5(content);
-      const key = getStorageKey(appName);
+      const key = getMFAppMD5Key(appName);
       const current = localStorage.getItem(key);
       if (current !== contentMd5) {
         localStorage.setItem(key, contentMd5);
