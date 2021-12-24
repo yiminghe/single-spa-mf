@@ -2383,7 +2383,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.4
+    single-spa-mf: 0.0.6
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -2411,7 +2411,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.4
+    single-spa-mf: 0.0.6
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -5930,7 +5930,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.4
+    single-spa-mf: 0.0.6
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -7000,12 +7000,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pika-plugin-clean-dist-src@npm:^0.1.1":
-  version: 0.1.2
-  resolution: "pika-plugin-clean-dist-src@npm:0.1.2::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fpika-plugin-clean-dist-src%2Fdownload%2Fpika-plugin-clean-dist-src-0.1.2.tgz"
+"pika-plugin-clean-dist-src@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "pika-plugin-clean-dist-src@npm:0.1.3::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fpika-plugin-clean-dist-src%2Fdownload%2Fpika-plugin-clean-dist-src-0.1.3.tgz"
   dependencies:
     rimraf: ^3.0.0
-  checksum: 9df0fa97a9b0b85fe4b174a66fbd0389f0f7aef60066a801171ff6699bcc12407aa43f45c003cd5f63eb15c7bfc1851d8e59c9ebbd22aee689c4faf548ee320e
+  checksum: 4860e3c1d21e5fe71ec97391844abb4eabcaeec5e6f6e490df2b50669fe02e776ce6f461ecf891c11f2bbb35e0860205a7a36fd8c5c0076732b4266790b224f9
   languageName: node
   linkType: hard
 
@@ -8404,7 +8404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@0.0.4, single-spa-mf@workspace:packages/single-spa-mf":
+"single-spa-mf@0.0.6, single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:
@@ -8415,7 +8415,7 @@ __metadata:
     "@pika/pack": ^0.5.0
     blueimp-md5: 2.x
     pika-plugin-build-web-babel: ^0.11.2
-    pika-plugin-clean-dist-src: ^0.1.1
+    pika-plugin-clean-dist-src: ^0.1.3
     pika-plugin-ts-types: ^0.1.5
     single-spa: 5.x
     typescript: 4.x
