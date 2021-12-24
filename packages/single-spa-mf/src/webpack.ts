@@ -1,5 +1,7 @@
+import { getMFAppEntry, getMFAppVar } from "./utils";
+
 // @ts-ignore 
-exports.getAppConfig = ({ app }:{app:string}) => ({
-  name: `${app}App`,
-  filename: `${app}Entry.js`,
+export const getMFAppConfig =({ app }:{app:string}) => ({
+  name: getMFAppVar(app),
+  filename: `${getMFAppEntry(app)}`,
 });

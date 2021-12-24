@@ -1,68 +1,86 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ModuleFederationPlugin } = require('webpack').container;
-const mfWebpack = require('single-spa-mf/pkg/webpack');
+
 
 function cap(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
-module.exports = ({ dir, app, port, main }) => ({
-  entry: `${dir}/src/entries/index`,
-  cache: false,
+const isEnvProduction=!!process.env.BUILD;
+const hash=true;
 
-  mode: 'development',
-  devtool: 'source-map',
+module.exports = ({ dir, app, port, main, require }) => {
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const { ModuleFederationPlugin } = require('webpack').container;
+  const mfWebpack = require('single-spa-mf/webpack');
+  const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+  return ({
+    entry: `${dir}/src/entries/index`,
 
-  optimization: {
-    minimize: false,
-  },
+    mode: 'development',
+    devtool: 'source-map',
 
-  devServer: {
-    historyApiFallback: true,
-    port,
-  },
+    optimization: {
+      minimize: false,
+    },
 
-  output: {
-    publicPath: 'auto',
-  },
-
-  resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.(t|j)sx?$/,
-        loader: require.resolve('babel-loader'),
-        options: {
-          presets: [
-            require.resolve('@babel/preset-react'),
-            require.resolve('@babel/preset-typescript'),
-          ],
-        },
+    devServer: {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
       },
-    ],
-  },
+      historyApiFallback: true,
+      port,
+    },
 
-  plugins: [
-    new ModuleFederationPlugin({
-      ...mfWebpack.getAppConfig({app}),
-      ...(main ? {} : {
-        exposes: {
-          main: `${dir}/src/${cap(app)}Page`,
+    output: {
+      filename: isEnvProduction
+        ? `static/js/[name]${hash ? '.[contenthash:8]' : ''}.js`
+        : 'static/js/[name].js',
+      // There are also additional JS chunk files if you use code splitting.
+      chunkFilename: isEnvProduction
+        ? `static/js/[name]${hash ? '.[contenthash:8]' : ''}.chunk.js`
+        : 'static/js/[name].chunk.js',
+      publicPath: 'auto',
+    },
+
+    resolve: {
+      extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.(t|j)sx?$/,
+          loader: require.resolve('babel-loader'),
+          options: {
+            presets: [
+              require.resolve('@babel/preset-react'),
+              require.resolve('@babel/preset-typescript'),
+            ],
+          },
         },
-      }),
-      shared: [
-        'react',
-        'react-dom',
-        'styled-components',
-        'react-router-dom',
-        'single-spa-react',
       ],
-    }),
-    new HtmlWebpackPlugin({
-      template: `${dir}/public/index.html`,
-    }),
-  ],
-});
+    },
+
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: `${dir}/public/index.html`,
+      }),
+      new WebpackManifestPlugin(),
+      new ModuleFederationPlugin({
+        ...mfWebpack.getMFAppConfig({ app }),
+        ...(main ? {} : {
+          exposes: {
+            main: `${dir}/src/${cap(app)}Page`,
+          },
+        }),
+        shared: [
+          'react',
+          'react-dom',
+          'styled-components',
+          'react-router-dom',
+          'single-spa-react',
+        ],
+      }),
+
+    ],
+  })
+};

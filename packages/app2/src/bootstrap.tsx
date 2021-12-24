@@ -1,21 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { initMFApps,start } from 'single-spa-mf';
 import { publicPath } from 'common';
-import { getLoader } from 'single-spa-mf';
 
 const customProps = {
   publicPath,
 };
 
-const { registerMainApplication, start } = getLoader();
-
-registerMainApplication(
-  'app2',
-  () => import('./App2Page'),
-  () => true,
-  customProps,
-);
+initMFApps({
+  'app2':{
+    main:() => import('./App2Page'),
+    activeFn:() => true,
+    customProps,
+  }
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

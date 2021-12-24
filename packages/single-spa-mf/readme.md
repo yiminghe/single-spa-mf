@@ -9,21 +9,34 @@ combine single-spa with module federation
 ### API
 
 ```ts
-import { LifeCycles, start } from 'single-spa';
-export declare function getLoader(handles?: AppHandles): {
-    registerApplication: (app: string, path: string, check: (l: Location) => boolean, customProps: any) => void;
-    registerMainApplication: (app: string, loader: () => Promise<LifeCycles<any>>, check: (l: Location) => boolean, customProps: any) => void;
-    start: typeof start;
-};
-interface AppHandle {
-    mount: (el: HTMLElement) => Promise<void>;
-    unmount: (el: HTMLElement) => Promise<void>;
+import { LifeCycles } from 'single-spa';
+import * as webpack from './webpack';
+export { webpack };
+export interface MFAppHandle {
+    mount: (el: HTMLElement) => Promise<void> | void;
+    unmount: (el: HTMLElement) => Promise<void> | void;
 }
-declare type AppHandles = Record<string, AppHandle>;
-export declare function addErrorAppHandles(handles?: AppHandles): void;
+export interface MFApp {
+    activeFn: (location: Location) => boolean;
+    /** main app module */
+    main?: () => Promise<LifeCycles<any>>;
+    /** app public url */
+    app?: string;
+    customProps?: any;
+    loader?: MFAppHandle;
+    error?: MFAppHandle;
+    /** whether check manifest to update, default do not check manifest: cache true */
+    cache?: boolean;
+    /** defaults to manifest.json */
+    manifestFileName?: string;
+}
+export declare type MFApps = Record<string, MFApp>;
+export declare function initMFApps(apps: MFApps): void;
+export * from 'single-spa';
+
 ```
 
 ### demo
 
-https://github.com/yiminghe/micro-frontend-demo
+https://github.com/yiminghe/single-spa-mf
 

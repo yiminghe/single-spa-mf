@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { getLoader, addErrorAppHandles } from 'single-spa-mf';
+import { initMFApps, MFApps, start } from 'single-spa-mf';
 import { publicPath } from 'common';
 
 const mainAppName = 'main';
@@ -36,74 +36,53 @@ const error = {
   },
 };
 
-const appNames = ['app1', 'app2', 'notFound', mainAppName];
+const appNames: ([string, number])[] = [['app1', 3002], ['app2', 3003], ['notFound', 3004]];
 
-const apps: any = appNames.reduce(
-  (ret, c) => ({
-    ...ret,
-    [c]: {
-      check(location: Location) {
-        return location.pathname.startsWith(publicPath + c);
-      },
-      loader,
-      error,
-    },
-  }),
-  {},
-);
-
-apps.app1.port = 3002;
-apps.app2.port = 3003;
-apps.notFound.port = 3004;
-
-const { registerApplication, registerMainApplication, start } = getLoader(
-  appNames.reduce(
-    (ret, c) => ({
-      ...ret,
-      [c]: apps[c].loader,
-    }),
-    {},
-  ),
-);
-
-addErrorAppHandles(
-  appNames.reduce(
-    (ret, c) => ({
-      ...ret,
-      [c]: apps[c].error,
-    }),
-    {},
-  ),
-);
-
-ReactDOM.render(<App />, document.getElementById('root'));
+function getActiveFn(app: string) {
+  return (location: Location) => {
+    return location.pathname.startsWith(publicPath + app);
+  };
+}
 
 const customProps = {
   publicPath,
 };
 
+const apps: MFApps = appNames.reduce(
+  (ret, c) => ({
+    ...ret,
+    [c[0]]: {
+      app: `http://localhost:${c[1]}`,
+      activeFn: getActiveFn(c[0]),
+      loader,
+      error,
+      cache:false,
+      customProps,
+    },
+  }),
+  {},
+);
+
 function notApp(location: Location) {
-  const c: any = apps;
-  for (const m of Object.keys(c)) {
-    if (m !== mainAppName && c[m].check(location)) {
+  for (const m of Object.keys(apps)) {
+    const app=apps[m];
+    if (!app.main&& app.activeFn(location)) {
       return false;
     }
   }
   return true;
 }
 
-registerMainApplication(mainAppName, () => import('./Main'), notApp, customProps);
+apps[mainAppName] = {
+  activeFn: notApp,
+  main: () => import('./Main'),
+  loader,
+  error,
+  customProps,
+};
 
-for (const app of appNames) {
-  if (app !== mainAppName) {
-    const info = apps[app];
-    registerApplication(
-      app,
-      `http://localhost:${info.port}`,
-      info.check,
-      customProps,
-    );
-  }
-}
+initMFApps(apps);
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 start();

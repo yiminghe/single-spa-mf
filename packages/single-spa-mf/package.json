@@ -3,22 +3,67 @@
   "description": "combine single-spa with module federation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yiminghe/micro-frontend-demo"
+    "url": "https://github.com/yiminghe/single-spa-mf"
   },
   "files": [
     "pkg"
   ],
-  "version": "0.0.3",
-  "module": "pkg/index.js",
-  "types": "pkg/index.d.ts",
+  "version": "0.0.4",
+  "main": "src/index",
+  "exports": {
+    ".": "./src/index",
+    "./webpack": "./pkg/webpack"
+  },
   "scripts": {
     "pub": "yarn run build && npm publish",
-    "build": "tsc"
+    "build": "pika-pack build && cp scripts/webpack.* pkg"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "pika-plugin-ts-types",
+        {
+          "args": [
+            "--rootDir",
+            "src"
+          ],
+          "yarn": true,
+          "tsconfig": "tsconfig.build.json"
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "preserveModules": true,
+          "format": "cjs",
+          "sourcemap": false
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "preserveModules": true,
+          "sourcemap": false
+        }
+      ],
+      [
+        "pika-plugin-clean-dist-src"
+      ]
+    ]
   },
   "devDependencies": {
+    "@babel/core": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-react": "7.x",
+    "@babel/preset-typescript": "7.x",
+    "@pika/pack": "^0.5.0",
+    "pika-plugin-build-web-babel": "^0.11.2",
+    "pika-plugin-clean-dist-src": "^0.1.1",
+    "pika-plugin-ts-types": "^0.1.5",
     "typescript": "4.x"
   },
   "dependencies": {
+    "blueimp-md5": "2.x",
     "single-spa": "5.x"
   }
 }

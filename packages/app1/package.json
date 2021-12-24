@@ -11,15 +11,21 @@
     "react-dom": "17.x",
     "react-is": "17.x",
     "react-router-dom": "6.x",
-    "single-spa-mf": "0.0.3",
+    "single-spa-mf": "0.0.4",
     "single-spa-react": "4.x",
     "styled-components": "5.x"
   },
   "devDependencies": {
-    "typescript": "4.x",
+    "@babel/core": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-react": "7.x",
+    "@babel/preset-typescript": "7.x",
+    "babel-loader": "8.x",
+    "html-webpack-plugin": "5.x",
     "webpack": "5.x",
     "webpack-cli": "4.x",
-    "webpack-dev-server": "4.x"
+    "webpack-dev-server": "4.x",
+    "webpack-manifest-plugin": "^4.0.2"
   },
   "browserslist": {
     "development": [
@@ -27,6 +33,7 @@
     ]
   },
   "scripts": {
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "build": "rm -rf dist && BUILD=1 webpack --mode development"
   }
 }

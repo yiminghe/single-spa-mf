@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { navigateToUrl } from 'single-spa';
+import { navigateToUrl } from 'single-spa-mf';
 import { publicPath } from 'common';
 import { Button } from './Button';
 
