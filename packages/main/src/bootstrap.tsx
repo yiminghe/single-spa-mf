@@ -116,4 +116,36 @@ initMFApps(apps);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
+const times: Record<string, { start: number; end: number; d: number }> = {};
+
+window.addEventListener('single-spa:before-mount-routing-event', (e: any) => {
+  const status = e.detail.newAppStatuses;
+  const keys = Object.keys(status);
+  for (const k of keys) {
+    if (status[k] === 'MOUNTED' && !reported[k]) {
+      times[k] = {
+        start: Date.now(),
+        end: 0,
+        d: 0,
+      };
+    }
+  }
+});
+
+let reported: Record<string, boolean> = {};
+window.addEventListener('single-spa:app-change', (e: any) => {
+  const status = e.detail.newAppStatuses;
+  const keys = Object.keys(status);
+  for (const k of keys) {
+    if (status[k] === 'MOUNTED' && !reported[k]) {
+      times[k] = {
+        ...times[k],
+        end: Date.now(),
+        d: Date.now() - times[k].start,
+      };
+      console.log(`${k} first mount time:`, times[k].d);
+      reported[k] = true;
+    }
+  }
+});
 start();

@@ -22,6 +22,8 @@ module.exports = ({ dir, app, port, main, require }) => {
       minimize: false,
     },
 
+
+
     devServer: {
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -62,6 +64,7 @@ module.exports = ({ dir, app, port, main, require }) => {
 
     plugins: [
       new HtmlWebpackPlugin({
+        publicPath:'/',
         template: `${dir}/public/index.html`,
       }),
       new WebpackManifestPlugin(),
