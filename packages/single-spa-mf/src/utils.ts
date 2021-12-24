@@ -1,15 +1,15 @@
-const tag='Single_SPA_MF';
+const tag = 'Single_SPA_MF';
 
 export function getMFAppVar(app: string) {
-  return `${app}_${tag}_App`;
+  return `${tag}_${app}_App`;
 }
 
 export function getMFAppEntry(app: string) {
-  return `${app}_${tag}_Entry.js`;
+  return `${tag}_${app}_Entry.js`;
 }
 
 export function getMFAppMD5Key(app: string) {
-  return `${app}_${tag}_MD5.js`;
+  return `${tag}_${app}_MD5.js`;
 }
 
-export const mainModule=`${tag}_Main`;
+export const mainModule = `${tag}_Main`;
