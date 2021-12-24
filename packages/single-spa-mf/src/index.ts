@@ -2,14 +2,12 @@ import {
   addErrorHandler,
   checkActivityFunctions,
   getAppNames,
-  registerApplication as registerApplication2,
+  registerApplication,
   navigateToUrl,
   LifeCycles,
 } from 'single-spa';
-import { getMFAppEntry, getMFAppVar, mainModule, getMFAppMD5Key } from './utils';
+import { getMFAppEntry, getMFAppVar, mainModule } from './utils';
 import * as webpack from './webpack';
-// @ts-ignore
-import md5 from 'blueimp-md5';
 
 export { webpack };
 
@@ -20,29 +18,25 @@ export interface MFAppHandle {
   unmount: (el: HTMLElement) => Promise<void> | void;
 }
 
-const defaultManifestFileName = 'manifest.json';
+type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
 export interface MFApp {
-  activeFn: (location: Location) => boolean;
+  activeWhen:SingleSpaConfig['activeWhen'];
   /** main app module */
-  main?: () => Promise<LifeCycles<any>>
-  /** app public url */
-  app?: string;
-  customProps?: any;
+  app?: (e: { name: string }) => Promise<LifeCycles<any>>;
+  /** app entry url */
+  entry?: (e: { name: string; entryName: string }) => string | Promise<string>;
+  customProps?: SingleSpaConfig['customProps'];
   loader?: MFAppHandle;
   error?: MFAppHandle;
-  /** whether check manifest to update, default do not check manifest: cache true */
-  cache?: boolean;
-  /** defaults to manifest.json */
-  manifestFileName?: string;
 }
 
 export type MFApps = Record<string, MFApp>;
 
 export function initMFApps(apps: MFApps) {
-  async function load<T>(fn: () => Promise<T>, id: string): Promise<T> {
-    const applicationElement = getApplicationElement(id)!;
-    const app = apps[id];
+  async function load<T>(fn: (e: { name: string }) => Promise<T>, appName: string): Promise<T> {
+    const applicationElement = getApplicationElement(appName)!;
+    const app = apps[appName];
     let showed: Promise<void> | undefined;
     let loadingTimeout = setTimeout(() => {
       if (app?.loader) {
@@ -50,7 +44,7 @@ export function initMFApps(apps: MFApps) {
       }
     }, 100);
     try {
-      const ret = await fn();
+      const ret = await fn({ name: appName });
       if (showed) {
         await showed;
         if (app?.loader) {
@@ -67,34 +61,29 @@ export function initMFApps(apps: MFApps) {
     return load(() => importApp(appName, app, mainModule), appName);
   }
 
-
-  function registerApplication(appName: string, app: MFApp) {
-    registerApplication2(
-      appName,
-      () => loadApp(appName, app),
-      app.activeFn,
-      app.customProps,
-    );
-  }
-
-  function registerMainApplication(app: string, loader: () => Promise<LifeCycles<any>>, check: (l: Location) => boolean, customProps: any) {
-    registerApplication2(
-      app,
-      () => load(() => loader(), app),
-      check,
-      customProps,
-    );
+  function registerApp(appName: string, mfApp: MFApp) {
+    if (mfApp.entry) {
+      registerApplication({
+        name: appName,
+        activeWhen: mfApp.activeWhen,
+        customProps: mfApp.customProps || {},
+        app: () => loadApp(appName, mfApp),
+      });
+    } else if (mfApp.app) {
+      registerApplication({
+        name: appName,
+        activeWhen: mfApp.activeWhen,
+        customProps: mfApp.customProps || {},
+        app: () => load(mfApp.app!, appName),
+      });
+    }
   }
 
   const appNames = Object.keys(apps);
 
   for (const appName of appNames) {
     const app = apps[appName];
-    if (app.main) {
-      registerMainApplication(appName, app.main, app.activeFn, app.customProps);
-    } else if (app.app) {
-      registerApplication(appName, app);
-    }
+    registerApp(appName, app);
   }
 
   const errors: Record<
@@ -179,22 +168,9 @@ async function importApp(appName: string, app: MFApp, module: string) {
   const appNS: any = getMFAppVar(appName);
   let container: any = window[appNS];
   if (!container) {
-    let entry = `${app.app}/${getMFAppEntry(appName)}`;
-    if (app.cache === false) {
-      const manifest = `${app.app}/${app.manifestFileName || defaultManifestFileName}`;
-      const response = await fetch(manifest, {
-        method: 'get',
-        mode: 'cors',
-        cache: 'no-cache'
-      });
-      const content = await response.text();
-      const contentMd5 = md5(content);
-      const key = getMFAppMD5Key(appName);
-      const current = localStorage.getItem(key);
-      if (current !== contentMd5) {
-        localStorage.setItem(key, contentMd5);
-      }
-      entry += '?' + contentMd5;
+    let entry = app.entry!({ entryName: `${getMFAppEntry(appName)}`, name: appName, });
+    if (typeof entry !== 'string') {
+      entry = await entry;
     }
     await loadScript(entry, appNS);
   }

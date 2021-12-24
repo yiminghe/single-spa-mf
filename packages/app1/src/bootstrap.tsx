@@ -10,8 +10,8 @@ const customProps = {
 
 initMFApps({
   'app1':{
-    main:() => import('./App1Page'),
-    activeFn:() => true,
+    app:() => import('./App1Page'),
+    activeWhen:() => true,
     customProps,
   }
 });

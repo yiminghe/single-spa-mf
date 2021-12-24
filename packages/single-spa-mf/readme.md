@@ -9,26 +9,28 @@ combine single-spa with module federation
 ### API
 
 ```ts
-import { LifeCycles } from 'single-spa';
+import { registerApplication, LifeCycles } from 'single-spa';
 import * as webpack from './webpack';
 export { webpack };
 export interface MFAppHandle {
     mount: (el: HTMLElement) => Promise<void> | void;
     unmount: (el: HTMLElement) => Promise<void> | void;
 }
+declare type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 export interface MFApp {
-    activeFn: (location: Location) => boolean;
+    activeWhen: SingleSpaConfig['activeWhen'];
     /** main app module */
-    main?: () => Promise<LifeCycles<any>>;
-    /** app public url */
-    app?: string;
-    customProps?: any;
+    app?: (e: {
+        name: string;
+    }) => Promise<LifeCycles<any>>;
+    /** app entry url */
+    entry?: (e: {
+        name: string;
+        entryName: string;
+    }) => string | Promise<string>;
+    customProps?: SingleSpaConfig['customProps'];
     loader?: MFAppHandle;
     error?: MFAppHandle;
-    /** whether check manifest to update, default do not check manifest: cache true */
-    cache?: boolean;
-    /** defaults to manifest.json */
-    manifestFileName?: string;
 }
 export declare type MFApps = Record<string, MFApp>;
 export declare function initMFApps(apps: MFApps): void;

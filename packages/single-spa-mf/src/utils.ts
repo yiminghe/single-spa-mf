@@ -8,8 +8,4 @@ export function getMFAppEntry(app: string) {
   return `${tag}_${app}_Entry.js`;
 }
 
-export function getMFAppMD5Key(app: string) {
-  return `${tag}_${app}_MD5.js`;
-}
-
 export const mainModule = `${tag}_main`;

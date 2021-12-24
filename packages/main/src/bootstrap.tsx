@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { initMFApps, MFApps, start } from 'single-spa-mf';
 import { publicPath } from 'common';
+// @ts-ignore
+import md5 from 'blueimp-md5';
 
 const mainAppName = 'main';
 
@@ -48,15 +50,36 @@ const customProps = {
   publicPath,
 };
 
+function getMFAppMD5Key(app: string) {
+  return `${app}_MD5.js`;
+}
+
 const apps: MFApps = appNames.reduce(
   (ret, c) => ({
     ...ret,
     [c[0]]: {
-      app: `http://localhost:${c[1]}`,
-      activeFn: getActiveFn(c[0]),
+      entry: async ({ entryName }: { entryName: string }) => {
+        const path = `http://localhost:${c[1]}`;
+        let entry = `${path}/${entryName}`;
+        const manifest = `${path}/manifest.json`;
+        const response = await fetch(manifest, {
+          method: 'get',
+          mode: 'cors',
+          cache: 'no-cache'
+        });
+        const content = await response.text();
+        const contentMd5 = md5(content);
+        const key = getMFAppMD5Key(c[0]);
+        const current = localStorage.getItem(key);
+        if (current !== contentMd5) {
+          localStorage.setItem(key, contentMd5);
+        }
+        entry += '?' + contentMd5;
+        return entry;
+      },
+      activeWhen: getActiveFn(c[0]),
       loader,
       error,
-      cache:false,
       customProps,
     },
   }),
@@ -65,8 +88,8 @@ const apps: MFApps = appNames.reduce(
 
 function notApp(location: Location) {
   for (const m of Object.keys(apps)) {
-    const app=apps[m];
-    if (!app.main&& app.activeFn(location)) {
+    const app = apps[m];
+    if (app.entry && typeof app.activeWhen==='function' &&app.activeWhen(location)) {
       return false;
     }
   }
@@ -74,8 +97,8 @@ function notApp(location: Location) {
 }
 
 apps[mainAppName] = {
-  activeFn: notApp,
-  main: () => import('./Main'),
+  activeWhen: notApp,
+  app: () => import('./Main'),
   loader,
   error,
   customProps,
