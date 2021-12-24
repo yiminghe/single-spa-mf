@@ -1,4 +1,4 @@
-import { getMFAppEntry, getMFAppVar, mainModule } from "./utils";
+import { getMFAppEntry, getMFAppVar, mainModule } from './utils';
 
 export const getMFAppConfig = ({ app }: { app: string }) => ({
   name: getMFAppVar(app),
@@ -6,5 +6,5 @@ export const getMFAppConfig = ({ app }: { app: string }) => ({
 });
 
 export const getMFExposes = (mod: string) => ({
-  [mainModule]: mod
+  [mainModule]: mod,
 });

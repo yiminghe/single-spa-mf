@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import { Button } from './Button';
 
-const App1Home = ({ publicPath, singleSpa }:any) => {
+const App1Home = ({ publicPath, singleSpa }: any) => {
   const gotoIntro = useCallback(() => {
     singleSpa.navigateToUrl(publicPath + 'app1/intro');
   }, []);

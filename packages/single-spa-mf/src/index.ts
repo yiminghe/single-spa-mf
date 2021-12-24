@@ -21,7 +21,7 @@ export interface MFAppHandle {
 type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
 export interface MFApp {
-  activeWhen:SingleSpaConfig['activeWhen'];
+  activeWhen: SingleSpaConfig['activeWhen'];
   /** main app module */
   app?: (e: { name: string }) => Promise<LifeCycles<any>>;
   /** app entry url */
@@ -34,7 +34,10 @@ export interface MFApp {
 export type MFApps = Record<string, MFApp>;
 
 export function initMFApps(apps: MFApps) {
-  async function load<T>(fn: (e: { name: string }) => Promise<T>, appName: string): Promise<T> {
+  async function load<T>(
+    fn: (e: { name: string }) => Promise<T>,
+    appName: string,
+  ): Promise<T> {
     const applicationElement = getApplicationElement(appName)!;
     const app = apps[appName];
     let showed: Promise<void> | undefined;
@@ -99,7 +102,8 @@ export function initMFApps(apps: MFApps) {
     const applicationElement = getApplicationElement(id)!;
     const app = apps[id];
     if (app?.error) {
-      const mountPromise = app.error.mount(applicationElement) || resolvedPromise;
+      const mountPromise =
+        app.error.mount(applicationElement) || resolvedPromise;
       errors[id] = { applicationElement, mountPromise };
     }
   });
@@ -115,7 +119,7 @@ export function initMFApps(apps: MFApps) {
             promises.push(errors[name].mountPromise);
             promises.push(
               app.error.unmount(errors[name].applicationElement) ||
-              resolvedPromise,
+                resolvedPromise,
             );
           }
           delete errors[name];
@@ -163,12 +167,14 @@ function getAppsToUnmount(newUrl: string | undefined) {
   return appsToUnmount;
 }
 
-
 async function importApp(appName: string, app: MFApp, module: string) {
   const appNS: any = getMFAppVar(appName);
   let container: any = window[appNS];
   if (!container) {
-    let entry = app.entry!({ entryName: `${getMFAppEntry(appName)}`, name: appName, });
+    let entry = app.entry!({
+      entryName: `${getMFAppEntry(appName)}`,
+      name: appName,
+    });
     if (typeof entry !== 'string') {
       entry = await entry;
     }

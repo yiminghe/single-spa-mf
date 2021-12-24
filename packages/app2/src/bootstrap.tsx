@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { initMFApps,start } from 'single-spa-mf';
+import { initMFApps, start } from 'single-spa-mf';
 import { publicPath } from 'common';
 
 const customProps = {
@@ -9,11 +9,11 @@ const customProps = {
 };
 
 initMFApps({
-  'app2':{
-    app:() => import('./App2Page'),
-    activeWhen:() => true,
+  app2: {
+    app: () => import('./App2Page'),
+    activeWhen: () => true,
     customProps,
-  }
+  },
 });
 
 ReactDOM.render(<App />, document.getElementById('root'));

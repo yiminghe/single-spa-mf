@@ -3,7 +3,7 @@ import singleSpaReact from 'single-spa-react';
 import ReactDOM from 'react-dom';
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 
-const App2Home = ({ publicPath, singleSpa }) => {
+const App2Home = ({ publicPath, singleSpa }: any) => {
   const gotoIntro = useCallback(() => {
     singleSpa.navigateToUrl(publicPath + 'app2/intro');
   }, []);

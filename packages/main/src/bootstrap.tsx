@@ -38,7 +38,11 @@ const error = {
   },
 };
 
-const appNames: ([string, number])[] = [['app1', 3002], ['app2', 3003], ['notFound', 3004]];
+const appNames: [string, number][] = [
+  ['app1', 3002],
+  ['app2', 3003],
+  ['notFound', 3004],
+];
 
 function getActiveFn(app: string) {
   return (location: Location) => {
@@ -65,7 +69,7 @@ const apps: MFApps = appNames.reduce(
         const response = await fetch(manifest, {
           method: 'get',
           mode: 'cors',
-          cache: 'no-cache'
+          cache: 'no-cache',
         });
         const content = await response.text();
         const contentMd5 = md5(content);
@@ -89,7 +93,11 @@ const apps: MFApps = appNames.reduce(
 function notApp(location: Location) {
   for (const m of Object.keys(apps)) {
     const app = apps[m];
-    if (app.entry && typeof app.activeWhen==='function' &&app.activeWhen(location)) {
+    if (
+      app.entry &&
+      typeof app.activeWhen === 'function' &&
+      app.activeWhen(location)
+    ) {
       return false;
     }
   }
