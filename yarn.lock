@@ -2383,7 +2383,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.10
+    single-spa-mf: 0.0.11
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -2411,7 +2411,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.10
+    single-spa-mf: 0.0.11
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -3755,6 +3755,15 @@ __metadata:
   dependencies:
     utila: ~0.4
   checksum: ea52fe303f5392e48dea563abef0e6fb3a478b8dbe3c599e99bb5d53981c6c38fc4944e56bb92a8ead6bb989d10b7914722ae11febbd2fd0910e33b9fc4aaa77
+  languageName: node
+  linkType: hard
+
+"dom-element-getter-helpers@npm:1.x":
+  version: 1.1.1
+  resolution: "dom-element-getter-helpers@npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fdom-element-getter-helpers%2Fdownload%2Fdom-element-getter-helpers-1.1.1.tgz"
+  dependencies:
+    single-spa: ^5.9.3
+  checksum: b46d7993a162746c8ecadac86a1d4d9c37d0d1574e60381ca059e56a30a44ce184950f7c6fbeb11bc1a7421f0b97640c566786c9acb116b49aac84cd18e3909e
   languageName: node
   linkType: hard
 
@@ -5931,7 +5940,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.10
+    single-spa-mf: 0.0.11
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -8405,7 +8414,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@0.0.10, single-spa-mf@workspace:packages/single-spa-mf":
+"single-spa-mf@0.0.11, single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:
@@ -8414,6 +8423,7 @@ __metadata:
     "@babel/preset-react": 7.x
     "@babel/preset-typescript": 7.x
     "@pika/pack": ^0.5.0
+    dom-element-getter-helpers: 1.x
     pika-plugin-build-web-babel: ^0.11.2
     pika-plugin-clean-dist-src: ^0.1.3
     pika-plugin-ts-types: ^0.1.5
@@ -8433,7 +8443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa@npm:5.x":
+"single-spa@npm:5.x, single-spa@npm:^5.9.3":
   version: 5.9.3
   resolution: "single-spa@npm:5.9.3::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fsingle-spa%2Fdownload%2Fsingle-spa-5.9.3.tgz"
   checksum: f262be4624519cd7dc01c04d51d95326fa5e6ddf425d6ceddfcf121d0747765b284c87540f9c7d9cfdd3fda9395c0a41149360832a5afdf5eca09af81bff4a8f

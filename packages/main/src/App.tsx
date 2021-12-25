@@ -36,11 +36,7 @@ const App = () => {
           notFound
         </Button>
       </div>
-      <div>
-        <div id="single-spa-application:main"></div>
-        <div id="single-spa-application:app1"></div>
-        <div id="single-spa-application:app2"></div>
-        <div id="single-spa-application:notFound"></div>
+      <div id="app-content">
       </div>
     </>
   );

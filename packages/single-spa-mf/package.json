@@ -8,7 +8,7 @@
   "files": [
     "pkg"
   ],
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "src/index",
   "exports": {
     ".": "./src/index",
@@ -63,6 +63,7 @@
     "typescript": "4.x"
   },
   "dependencies": {
+    "dom-element-getter-helpers": "1.x",
     "single-spa": "5.x"
   }
 }

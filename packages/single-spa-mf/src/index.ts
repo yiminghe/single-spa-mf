@@ -8,6 +8,7 @@ import {
 } from 'single-spa';
 import { getMFAppEntry, getMFAppVar, mainModule } from './utils';
 import * as webpack from './webpack';
+import { chooseDomElementGetter } from "dom-element-getter-helpers";
 
 export { webpack };
 
@@ -38,7 +39,7 @@ export function initMFApps(apps: MFApps) {
     fn: (e: { name: string }) => Promise<T>,
     appName: string,
   ): Promise<T> {
-    const applicationElement = getApplicationElement(appName)!;
+    const applicationElement = getApplicationElement(appName, apps[appName])!;
     const app = apps[appName];
     let showed: Promise<void> | undefined;
     let loadingTimeout = setTimeout(() => {
@@ -98,13 +99,15 @@ export function initMFApps(apps: MFApps) {
   > = {};
 
   addErrorHandler((err) => {
-    const id = err.appOrParcelName;
-    const applicationElement = getApplicationElement(id)!;
-    const app = apps[id];
-    if (app?.error) {
-      const mountPromise =
-        app.error.mount(applicationElement) || resolvedPromise;
-      errors[id] = { applicationElement, mountPromise };
+    const appName = err.appOrParcelName;
+    const app = apps[appName];
+    if (app) {
+      const applicationElement = getApplicationElement(appName, app)!;
+      if (app.error) {
+        const mountPromise =
+          app.error.mount(applicationElement) || resolvedPromise;
+        errors[appName] = { applicationElement, mountPromise };
+      }
     }
   });
 
@@ -119,7 +122,7 @@ export function initMFApps(apps: MFApps) {
             promises.push(errors[name].mountPromise);
             promises.push(
               app.error.unmount(errors[name].applicationElement) ||
-                resolvedPromise,
+              resolvedPromise,
             );
           }
           delete errors[name];
@@ -137,8 +140,11 @@ export function initMFApps(apps: MFApps) {
 
 export * from 'single-spa';
 
-function getApplicationElement(name: string) {
-  return document.getElementById(`single-spa-application:${name}`);
+function getApplicationElement(name: string, app: MFApp) {
+  return chooseDomElementGetter({}, {
+    ...app.customProps,
+    name,
+  } as any)();
 }
 
 function strToLocation(str: string): any {

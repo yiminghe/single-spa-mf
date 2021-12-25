@@ -6,6 +6,8 @@ import { publicPath } from 'common';
 // @ts-ignore
 import md5 from 'blueimp-md5';
 
+ReactDOM.render(<App />, document.getElementById('root'));
+
 const mainAppName = 'main';
 
 const loadingHtml = `
@@ -50,8 +52,21 @@ function getActiveFn(app: string) {
   };
 }
 
+const appContent = document.getElementById('app-content');
 const customProps = {
   publicPath,
+  domElementGetter(props: { name: string }) {
+    const { name } = props;
+    const id = `single-spa-application:${name}`;
+    let el = document.getElementById(id);
+    if (el) {
+      return el;
+    }
+    el = document.createElement('div');
+    el.id = id;
+    appContent?.appendChild(el);
+    return el;
+  }
 };
 
 function getMFAppMD5Key(app: string) {
@@ -114,7 +129,7 @@ apps[mainAppName] = {
 
 initMFApps(apps);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
 
 const times: Record<string, { start: number; end: number; d: number }> = {};
 
