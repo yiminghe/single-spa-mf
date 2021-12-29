@@ -1,12 +1,18 @@
 ## single-spa-mf
 
-combine single-spa with module federation
+A micro frontend solution based on single-spa and module federation
 
 [![NPM version](https://badge.fury.io/js/single-spa-mf.png)](http://badge.fury.io/js/single-spa-mf)
 [![NPM downloads](http://img.shields.io/npm/dm/single-spa-mf.svg)](https://npmjs.org/package/single-spa-mf)
 
 
+```
+yarn add single-spa-mf
+```
+
 ### API
+
+#### single-spa-mf
 
 ```ts
 import { registerApplication, LifeCycles } from 'single-spa';
@@ -36,6 +42,20 @@ export interface MFApp {
 export declare function registerMFApplications(appArray: MFApp[]): void;
 export * from 'single-spa';
 
+```
+
+#### single-spa-mf/webpack
+
+```ts
+export declare const getMFAppConfig: ({ app }: {
+    app: string;
+}) => {
+    name: string;
+    filename: string;
+};
+export declare const getMFExposes: (mod: string) => {
+    [x: string]: string;
+};
 ```
 
 ### demo
