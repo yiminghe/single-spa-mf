@@ -72,7 +72,7 @@ module.exports = ({ dir, app, port, main, require }) => {
         ...mfWebpack.getMFAppConfig({ app }),
         ...(main ? {} : {
           exposes: {
-            ...mfWebpack.getMFExposes(`${dir}/src/${cap(app)}Page`),
+            ...mfWebpack.getMFExposes(`${dir}/src/main/Main`),
           },
         }),
         shared: [

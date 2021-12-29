@@ -18,6 +18,7 @@ export interface MFAppHandle {
 }
 declare type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 export interface MFApp {
+    name: string;
     activeWhen: SingleSpaConfig['activeWhen'];
     /** main app module */
     app?: (e: {
@@ -32,8 +33,7 @@ export interface MFApp {
     loader?: MFAppHandle;
     error?: MFAppHandle;
 }
-export declare type MFApps = Record<string, MFApp>;
-export declare function initMFApps(apps: MFApps): void;
+export declare function registerMFApplications(appArray: MFApp[]): void;
 export * from 'single-spa';
 
 ```
@@ -54,7 +54,5 @@ yarn start
 ```
 
 main app: http://localhost:3001/
-
-app2: http://localhost:3003/
 
 app1: http://localhost:3002/

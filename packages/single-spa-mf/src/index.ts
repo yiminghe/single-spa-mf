@@ -22,6 +22,7 @@ export interface MFAppHandle {
 type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
 export interface MFApp {
+  name: string;
   activeWhen: SingleSpaConfig['activeWhen'];
   /** main app module */
   app?: (e: { name: string }) => Promise<LifeCycles<any>>;
@@ -32,118 +33,125 @@ export interface MFApp {
   error?: MFAppHandle;
 }
 
-export type MFApps = Record<string, MFApp>;
+type MFApps = Record<string, MFApp>;
 
-export function initMFApps(apps: MFApps) {
-  async function load<T>(
-    fn: (e: { name: string }) => Promise<T>,
-    appName: string,
-  ): Promise<T> {
-    const applicationElement = getApplicationElement(appName, apps[appName])!;
-    const app = apps[appName];
-    let showed: Promise<void> | undefined;
-    let loadingTimeout = setTimeout(() => {
+let apps: MFApps = {};
+
+async function load<T>(
+  fn: (e: { name: string }) => Promise<T>,
+  appName: string,
+): Promise<T> {
+  const app = apps[appName];
+  if(!app){
+    throw new Error(`App:${appName} not found!`);
+  }
+  const applicationElement = getApplicationElement(app)!;
+  let showed: Promise<void> | undefined;
+  let loadingTimeout = setTimeout(() => {
+    if (app?.loader) {
+      showed = app.loader.mount(applicationElement) || resolvedPromise;
+    }
+  }, 100);
+  try {
+    const ret = await fn({ name: appName });
+    if (showed) {
+      await showed;
       if (app?.loader) {
-        showed = app.loader.mount(applicationElement) || resolvedPromise;
+        await app.loader.unmount(applicationElement);
       }
-    }, 100);
-    try {
-      const ret = await fn({ name: appName });
-      if (showed) {
-        await showed;
-        if (app?.loader) {
-          await app.loader.unmount(applicationElement);
+    }
+    return ret;
+  } finally {
+    clearTimeout(loadingTimeout);
+  }
+}
+
+async function loadApp(app: MFApp) {
+  return load(() => importApp(app, mainModule), app.name);
+}
+
+function registerApp(app: MFApp) {
+  if (app.entry) {
+    registerApplication({
+      name: app.name,
+      activeWhen: app.activeWhen,
+      customProps: app.customProps || {},
+      app: () => loadApp(app),
+    });
+  } else if (app.app) {
+    registerApplication({
+      name: app.name,
+      activeWhen: app.activeWhen,
+      customProps: app.customProps || {},
+      app: () => load(app.app!, app.name),
+    });
+  }
+}
+
+const errors: Record<
+  string,
+  {
+    applicationElement: HTMLElement;
+    mountPromise: Promise<void>;
+  }
+> = {};
+
+addErrorHandler((err) => {
+  const appName = err.appOrParcelName;
+  const app = apps[appName];
+  if (app) {
+    const applicationElement = getApplicationElement(app)!;
+    if (app.error) {
+      const mountPromise =
+        app.error.mount(applicationElement) || resolvedPromise;
+      errors[appName] = { applicationElement, mountPromise };
+    }
+  }
+});
+
+window.addEventListener(
+  'single-spa:before-routing-event',
+  ({ detail: { newUrl, cancelNavigation } }: any) => {
+    const promises: Promise<void>[] = [];
+    getAppsToUnmount(newUrl).forEach((name) => {
+      if (errors[name]) {
+        const app = apps[name];
+        if (app?.error) {
+          promises.push(errors[name].mountPromise);
+          promises.push(
+            app.error.unmount(errors[name].applicationElement) ||
+            resolvedPromise,
+          );
         }
+        delete errors[name];
       }
-      return ret;
-    } finally {
-      clearTimeout(loadingTimeout);
-    }
-  }
-
-  async function loadApp(appName: string, app: MFApp) {
-    return load(() => importApp(appName, app, mainModule), appName);
-  }
-
-  function registerApp(appName: string, mfApp: MFApp) {
-    if (mfApp.entry) {
-      registerApplication({
-        name: appName,
-        activeWhen: mfApp.activeWhen,
-        customProps: mfApp.customProps || {},
-        app: () => loadApp(appName, mfApp),
-      });
-    } else if (mfApp.app) {
-      registerApplication({
-        name: appName,
-        activeWhen: mfApp.activeWhen,
-        customProps: mfApp.customProps || {},
-        app: () => load(mfApp.app!, appName),
+    });
+    if (promises.length) {
+      cancelNavigation();
+      Promise.all(promises).then(() => {
+        navigateToUrl(newUrl);
       });
     }
-  }
+  },
+);
 
-  const appNames = Object.keys(apps);
-
-  for (const appName of appNames) {
-    const app = apps[appName];
-    registerApp(appName, app);
-  }
-
-  const errors: Record<
-    string,
-    {
-      applicationElement: HTMLElement;
-      mountPromise: Promise<void>;
+export function registerMFApplications(appArray: MFApp[]) {
+  for (const app of appArray) {
+    const appName = app.name;
+    if (apps[appName]) {
+      throw new Error(`App:${appName} already registered!`);
     }
-  > = {};
-
-  addErrorHandler((err) => {
-    const appName = err.appOrParcelName;
-    const app = apps[appName];
-    if (app) {
-      const applicationElement = getApplicationElement(appName, app)!;
-      if (app.error) {
-        const mountPromise =
-          app.error.mount(applicationElement) || resolvedPromise;
-        errors[appName] = { applicationElement, mountPromise };
-      }
-    }
-  });
-
-  window.addEventListener(
-    'single-spa:before-routing-event',
-    ({ detail: { newUrl, cancelNavigation } }: any) => {
-      const promises: Promise<void>[] = [];
-      getAppsToUnmount(newUrl).forEach((name) => {
-        if (errors[name]) {
-          const app = apps[name];
-          if (app?.error) {
-            promises.push(errors[name].mountPromise);
-            promises.push(
-              app.error.unmount(errors[name].applicationElement) ||
-              resolvedPromise,
-            );
-          }
-          delete errors[name];
-        }
-      });
-      if (promises.length) {
-        cancelNavigation();
-        Promise.all(promises).then(() => {
-          navigateToUrl(newUrl);
-        });
-      }
-    },
-  );
+    apps[appName] = app;
+    registerApp(app);
+  }
 }
 
 export * from 'single-spa';
 
-function getApplicationElement(name: string, app: MFApp) {
+function getApplicationElement(app: MFApp) {
   return chooseDomElementGetter({}, {
     ...app.customProps,
-    name,
+    name:app.name,
   } as any)();
 }
 
@@ -173,7 +181,8 @@ function getAppsToUnmount(newUrl: string | undefined) {
   return appsToUnmount;
 }
 
-async function importApp(appName: string, app: MFApp, module: string) {
+async function importApp(app: MFApp, module: string) {
+  const appName=app.name;
   const appNS: any = getMFAppVar(appName);
   let container: any = window[appNS];
   if (!container) {

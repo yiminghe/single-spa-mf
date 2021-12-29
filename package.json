@@ -12,7 +12,6 @@
     "prettier": "prettier --write \"packages/**/*.{js,tsx,ts,jsx}\"",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "start:app": "yarn workspace main start",
-    "start:app2": "yarn workspace app2 start",
     "start:app1": "yarn workspace app1 start",
     "start": "concurrently 'yarn:start:*'"
   },

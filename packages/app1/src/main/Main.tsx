@@ -1,8 +1,12 @@
-import React, { useCallback } from 'react';
 import singleSpaReact from 'single-spa-react';
 import ReactDOM from 'react-dom';
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
-import { Button } from './Button';
+import React, { lazy, Suspense,useCallback } from 'react';
+
+const fallback = <div>loading</div>;
+
+const Home = lazy(() => import('./Home'));
+const Intro = lazy(() => import('./Intro'));
 
 const App1Home = ({ publicPath, singleSpa }: any) => {
   const gotoIntro = useCallback(() => {
@@ -29,23 +33,17 @@ const App1Home = ({ publicPath, singleSpa }: any) => {
             <Route
               path={publicPath + 'app1'}
               element={
-                <>
-                  <div>app1 home</div>
-                  <Button onClick={gotoIntro}>goto app1 intro</Button>
-                  <br />
-                  <Button onClick={gotoNone}>goto none</Button>
-                  <br />
-                  <Button onClick={gotoNone2}>goto home none</Button>
-                </>
+                <Suspense fallback={fallback}>
+                  <Home gotoIntro={gotoIntro} gotoNone={gotoNone} gotoNone2={gotoNone2}/>
+                </Suspense>
               }
             />
             <Route
               path={publicPath + 'app1/intro'}
               element={
-                <>
-                  <div>app1 intro</div>
-                  <Button onClick={gotoHome}>goto app1 home</Button>
-                </>
+                <Suspense fallback={fallback}>
+                  <Intro gotoHome={gotoHome}/>
+                </Suspense>
               }
             />
             <Route

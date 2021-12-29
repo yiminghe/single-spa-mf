@@ -2383,35 +2383,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.11
-    single-spa-react: 4.x
-    styled-components: 5.x
-    webpack: 5.x
-    webpack-cli: 4.x
-    webpack-dev-server: 4.x
-    webpack-manifest-plugin: ^4.0.2
-  languageName: unknown
-  linkType: soft
-
-"app2@workspace:packages/app2":
-  version: 0.0.0-use.local
-  resolution: "app2@workspace:packages/app2"
-  dependencies:
-    "@babel/core": 7.x
-    "@babel/preset-env": 7.x
-    "@babel/preset-react": 7.x
-    "@babel/preset-typescript": 7.x
-    "@types/react": 17.x
-    "@types/react-dom": 17.x
-    "@types/styled-components": 5.x
-    babel-loader: 8.x
-    common: ~0.0.4
-    html-webpack-plugin: 5.x
-    react: 17.x
-    react-dom: 17.x
-    react-is: 17.x
-    react-router-dom: 6.x
-    single-spa-mf: 0.0.11
+    single-spa-mf: 0.0.12
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -5940,7 +5912,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.11
+    single-spa-mf: 0.0.12
     single-spa-react: 4.x
     styled-components: 5.x
     webpack: 5.x
@@ -8414,7 +8386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@0.0.11, single-spa-mf@workspace:packages/single-spa-mf":
+"single-spa-mf@0.0.12, single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:

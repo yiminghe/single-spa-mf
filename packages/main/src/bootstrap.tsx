@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { initMFApps, MFApps, start } from 'single-spa-mf';
+import { registerMFApplications, MFApp, start } from 'single-spa-mf';
 import { publicPath } from 'common';
 // @ts-ignore
 import md5 from 'blueimp-md5';
@@ -42,7 +42,6 @@ const error = {
 
 const appNames: [string, number][] = [
   ['app1', 3002],
-  ['app2', 3003],
   ['notFound', 3004],
 ];
 
@@ -73,41 +72,37 @@ function getMFAppMD5Key(app: string) {
   return `${app}_MD5.js`;
 }
 
-const apps: MFApps = appNames.reduce(
-  (ret, c) => ({
-    ...ret,
-    [c[0]]: {
-      entry: async ({ entryName }: { entryName: string }) => {
-        const path = `http://localhost:${c[1]}`;
-        let entry = `${path}/${entryName}`;
-        const manifest = `${path}/manifest.json`;
-        const response = await fetch(manifest, {
-          method: 'get',
-          mode: 'cors',
-          cache: 'no-cache',
-        });
-        const content = await response.text();
-        const contentMd5 = md5(content);
-        const key = getMFAppMD5Key(c[0]);
-        const current = localStorage.getItem(key);
-        if (current !== contentMd5) {
-          localStorage.setItem(key, contentMd5);
-        }
-        entry += '?' + contentMd5;
-        return entry;
-      },
-      activeWhen: getActiveFn(c[0]),
-      loader,
-      error,
-      customProps,
+const apps: MFApp[] = appNames.map(
+  ([name, port]) => ({
+    name,
+    entry: async ({ entryName }: { entryName: string }) => {
+      const path = `http://localhost:${port}`;
+      let entry = `${path}/${entryName}`;
+      const manifest = `${path}/manifest.json`;
+      const response = await fetch(manifest, {
+        method: 'get',
+        mode: 'cors',
+        cache: 'no-cache',
+      });
+      const content = await response.text();
+      const contentMd5 = md5(content);
+      const key = getMFAppMD5Key(name);
+      const current = localStorage.getItem(key);
+      if (current !== contentMd5) {
+        localStorage.setItem(key, contentMd5);
+      }
+      entry += '?' + contentMd5;
+      return entry;
     },
+    activeWhen: getActiveFn(name),
+    loader,
+    error,
+    customProps,
   }),
-  {},
 );
 
 function notApp(location: Location) {
-  for (const m of Object.keys(apps)) {
-    const app = apps[m];
+  for (const app of apps) {
     if (
       app.entry &&
       typeof app.activeWhen === 'function' &&
@@ -119,17 +114,16 @@ function notApp(location: Location) {
   return true;
 }
 
-apps[mainAppName] = {
+apps.push({
+  name:mainAppName,
   activeWhen: notApp,
-  app: () => import('./Main'),
+  app: () => import('./main/Main'),
   loader,
   error,
   customProps,
-};
+});
 
-initMFApps(apps);
-
-
+registerMFApplications(apps);
 
 const times: Record<string, { start: number; end: number; d: number }> = {};
 
