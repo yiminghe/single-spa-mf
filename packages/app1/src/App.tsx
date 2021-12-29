@@ -1,4 +1,3 @@
-import Page from './App1Page';
 import React from 'react';
 
 export default () => {
