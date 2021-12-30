@@ -13,9 +13,11 @@
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "start:app": "yarn workspace main start",
     "start:app1": "yarn workspace app1 start",
-    "start": "concurrently 'yarn:start:*'"
+    "start": "concurrently 'yarn:start:*'",
+    "test":"cypress run"
   },
   "devDependencies": {
+    "cypress": "^9.2.0",
     "@babel/core": "7.x",
     "@tsconfig/recommended": "^1.0.1",
     "concurrently": "6.x",

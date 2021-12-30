@@ -1,0 +1,16 @@
+language: node_js
+
+notifications:
+    email:
+        - yiminghe@gmail.com
+
+node_js:
+  - 16.13.1
+
+before_install:
+  - corepack enable
+
+script:
+  - yarn start &
+  - yarn cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98
+  - kill $(jobs -p) || true
