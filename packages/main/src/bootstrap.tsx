@@ -5,6 +5,7 @@ import { registerMFApplications, MFApp, start } from 'single-spa-mf';
 import { publicPath } from 'common';
 // @ts-ignore
 import md5 from 'blueimp-md5';
+import './bootstrap.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
