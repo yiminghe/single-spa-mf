@@ -8,7 +8,7 @@ import {
 } from 'single-spa';
 import { getMFAppEntry, getMFAppVar, mainModule } from './utils';
 import * as webpack from './webpack';
-import { chooseDomElementGetter } from "dom-element-getter-helpers";
+import { chooseDomElementGetter } from 'dom-element-getter-helpers';
 
 export { webpack };
 
@@ -42,7 +42,7 @@ async function load<T>(
   appName: string,
 ): Promise<T> {
   const app = apps[appName];
-  if(!app){
+  if (!app) {
     throw new Error(`App:${appName} not found!`);
   }
   const applicationElement = getApplicationElement(app)!;
@@ -120,7 +120,7 @@ window.addEventListener(
           promises.push(errors[name].mountPromise);
           promises.push(
             app.error.unmount(errors[name].applicationElement) ||
-            resolvedPromise,
+              resolvedPromise,
           );
         }
         delete errors[name];
@@ -151,7 +151,7 @@ export * from 'single-spa';
 function getApplicationElement(app: MFApp) {
   return chooseDomElementGetter({}, {
     ...app.customProps,
-    name:app.name,
+    name: app.name,
   } as any)();
 }
 
@@ -182,7 +182,7 @@ function getAppsToUnmount(newUrl: string | undefined) {
 }
 
 async function importApp(app: MFApp, module: string) {
-  const appName=app.name;
+  const appName = app.name;
   const appNS: any = getMFAppVar(appName);
   let container: any = window[appNS];
   if (!container) {

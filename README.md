@@ -60,7 +60,7 @@ export declare const getMFExposes: (mod: string) => {
 
 ### demo
 
-react + react-router + styled-components + single-spa + module federation + yarn3
+react + react-router + tailwindcss + single-spa + module federation + yarn3
 
 ```
 nvm install 16.13.1

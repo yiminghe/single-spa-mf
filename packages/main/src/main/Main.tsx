@@ -14,8 +14,22 @@ const Main = () => {
     <BrowserRouter>
       <div>
         <Routes>
-          <Route path={publicPath + ''} element={<Suspense fallback={fallback}><Home /></Suspense>} />
-          <Route path={publicPath + 'intro'} element={<Suspense fallback={fallback}><Intro /></Suspense>} />
+          <Route
+            path={publicPath + ''}
+            element={
+              <Suspense fallback={fallback}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path={publicPath + 'intro'}
+            element={
+              <Suspense fallback={fallback}>
+                <Intro />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<Navigate to={publicPath + ''} replace />} />
         </Routes>
       </div>

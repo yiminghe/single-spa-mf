@@ -65,41 +65,39 @@ const customProps = {
     el.id = id;
     appContent?.appendChild(el);
     return el;
-  }
+  },
 };
 
 function getMFAppMD5Key(app: string) {
   return `${app}_MD5.js`;
 }
 
-const apps: MFApp[] = appNames.map(
-  ([name, port]) => ({
-    name,
-    entry: async ({ entryName }: { entryName: string }) => {
-      const path = `http://localhost:${port}`;
-      let entry = `${path}/${entryName}`;
-      const manifest = `${path}/manifest.json`;
-      const response = await fetch(manifest, {
-        method: 'get',
-        mode: 'cors',
-        cache: 'no-cache',
-      });
-      const content = await response.text();
-      const contentMd5 = md5(content);
-      const key = getMFAppMD5Key(name);
-      const current = localStorage.getItem(key);
-      if (current !== contentMd5) {
-        localStorage.setItem(key, contentMd5);
-      }
-      entry += '?' + contentMd5;
-      return entry;
-    },
-    activeWhen: getActiveFn(name),
-    loader,
-    error,
-    customProps,
-  }),
-);
+const apps: MFApp[] = appNames.map(([name, port]) => ({
+  name,
+  entry: async ({ entryName }: { entryName: string }) => {
+    const path = `http://localhost:${port}`;
+    let entry = `${path}/${entryName}`;
+    const manifest = `${path}/manifest.json`;
+    const response = await fetch(manifest, {
+      method: 'get',
+      mode: 'cors',
+      cache: 'no-cache',
+    });
+    const content = await response.text();
+    const contentMd5 = md5(content);
+    const key = getMFAppMD5Key(name);
+    const current = localStorage.getItem(key);
+    if (current !== contentMd5) {
+      localStorage.setItem(key, contentMd5);
+    }
+    entry += '?' + contentMd5;
+    return entry;
+  },
+  activeWhen: getActiveFn(name),
+  loader,
+  error,
+  customProps,
+}));
 
 function notApp(location: Location) {
   for (const app of apps) {
@@ -115,7 +113,7 @@ function notApp(location: Location) {
 }
 
 apps.push({
-  name:mainAppName,
+  name: mainAppName,
   activeWhen: notApp,
   app: () => import('./main/Main'),
   loader,

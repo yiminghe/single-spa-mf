@@ -19,21 +19,17 @@ const App = () => {
         <Button onClick={onClick} data-href={publicPath + ''}>
           home
         </Button>{' '}
-        &nbsp;
         <Button onClick={onClick} data-href={publicPath + 'intro'}>
           intro
         </Button>{' '}
-        &nbsp;
         <Button onClick={onClick} data-href={publicPath + 'app1'}>
           app1
         </Button>
-        &nbsp;
         <Button onClick={onClick} data-href={publicPath + 'notFound'}>
           notFound
         </Button>
       </div>
-      <div id="app-content">
-      </div>
+      <div id="app-content"></div>
     </>
   );
 };

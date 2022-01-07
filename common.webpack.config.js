@@ -12,6 +12,40 @@ module.exports = ({ dir, app, port, main, require }) => {
   const { ModuleFederationPlugin } = require('webpack').container;
   const mfWebpack = require('single-spa-mf/webpack');
   const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+  const getStyleLoaders = (
+    cssOptions,
+  ) => {
+    const loaders = [{
+        loader: MiniCssExtractPlugin.loader
+      },
+      {
+        loader: require.resolve('css-loader'),
+        options: cssOptions,
+      },
+      {
+        // Options for PostCSS as we reference these options twice
+        // Adds vendor prefixing based on your specified browser support in
+        // package.json
+        loader: require.resolve('postcss-loader'),
+        options: {
+          postcssOptions: {
+            // Necessary for external CSS imports to work
+            // https://github.com/facebook/create-react-app/issues/2677
+            ident: 'postcss',
+            plugins: [
+              require.resolve('autoprefixer'),
+              require.resolve('tailwindcss'),
+            ]
+          },
+          sourceMap: true,
+        },
+      },
+    ].filter(Boolean);
+    return loaders;
+  };
+
   return ({
     entry: `${dir}/src/entries/index`,
 
@@ -59,10 +93,18 @@ module.exports = ({ dir, app, port, main, require }) => {
             ],
           },
         },
+        {
+          test:  /\.css$/,
+          use: getStyleLoaders({
+            importLoaders: 1,
+          }),
+          sideEffects: true,
+        },
       ],
     },
 
     plugins: [
+      new MiniCssExtractPlugin(),
       new HtmlWebpackPlugin({
         publicPath:'/',
         template: `${dir}/public/index.html`,
@@ -78,7 +120,6 @@ module.exports = ({ dir, app, port, main, require }) => {
         shared: [
           'react',
           'react-dom',
-          'styled-components',
           'react-router-dom',
           'single-spa-react',
         ],
