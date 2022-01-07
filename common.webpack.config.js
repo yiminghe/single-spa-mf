@@ -13,35 +13,31 @@ module.exports = ({ dir, app, port, main, require }) => {
   const mfWebpack = require('single-spa-mf/webpack');
   const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const { resolve: r } = require;
 
   const getStyleLoaders = (
     cssOptions,
   ) => {
     const loaders = [{
-        loader: MiniCssExtractPlugin.loader
-      },
-      {
-        loader: require.resolve('css-loader'),
-        options: cssOptions,
-      },
-      {
-        // Options for PostCSS as we reference these options twice
-        // Adds vendor prefixing based on your specified browser support in
-        // package.json
-        loader: require.resolve('postcss-loader'),
-        options: {
-          postcssOptions: {
-            // Necessary for external CSS imports to work
-            // https://github.com/facebook/create-react-app/issues/2677
-            ident: 'postcss',
-            plugins: [
-              require.resolve('autoprefixer'),
-              require.resolve('tailwindcss'),
-            ]
-          },
-          sourceMap: true,
+      loader: MiniCssExtractPlugin.loader
+    },
+    {
+      loader: r('css-loader'),
+      options: cssOptions,
+    },
+    {
+      loader: r('postcss-loader'),
+      options: {
+        postcssOptions: {
+          ident: 'postcss',
+          plugins: [
+            r('autoprefixer'),
+            r('tailwindcss'),
+          ]
         },
+        sourceMap: true,
       },
+    },
     ].filter(Boolean);
     return loaders;
   };
@@ -55,8 +51,6 @@ module.exports = ({ dir, app, port, main, require }) => {
     optimization: {
       minimize: false,
     },
-
-
 
     devServer: {
       headers: {
@@ -85,16 +79,16 @@ module.exports = ({ dir, app, port, main, require }) => {
       rules: [
         {
           test: /\.(t|j)sx?$/,
-          loader: require.resolve('babel-loader'),
+          loader: r('babel-loader'),
           options: {
             presets: [
-              require.resolve('@babel/preset-react'),
-              require.resolve('@babel/preset-typescript'),
+              r('@babel/preset-react'),
+              r('@babel/preset-typescript'),
             ],
           },
         },
         {
-          test:  /\.css$/,
+          test: /\.css$/,
           use: getStyleLoaders({
             importLoaders: 1,
           }),
@@ -106,7 +100,7 @@ module.exports = ({ dir, app, port, main, require }) => {
     plugins: [
       new MiniCssExtractPlugin(),
       new HtmlWebpackPlugin({
-        publicPath:'/',
+        publicPath: '/',
         template: `${dir}/public/index.html`,
       }),
       new WebpackManifestPlugin(),
