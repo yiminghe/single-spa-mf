@@ -21,6 +21,8 @@ export interface MFAppHandle {
 
 type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
+type AsyncFunction = (app: MFApp) => Promise<void>;
+
 export interface MFApp {
   name: string;
   activeWhen: SingleSpaConfig['activeWhen'];
@@ -31,6 +33,8 @@ export interface MFApp {
   customProps?: SingleSpaConfig['customProps'];
   loader?: MFAppHandle;
   error?: MFAppHandle;
+  beforeLoad?: AsyncFunction;
+  afterLoad?: AsyncFunction;
 }
 
 type MFApps = Record<string, MFApp>;
@@ -120,7 +124,7 @@ window.addEventListener(
           promises.push(errors[name].mountPromise);
           promises.push(
             app.error.unmount(errors[name].applicationElement) ||
-              resolvedPromise,
+            resolvedPromise,
           );
         }
         delete errors[name];
@@ -182,6 +186,9 @@ function getAppsToUnmount(newUrl: string | undefined) {
 }
 
 async function importApp(app: MFApp, module: string) {
+  if (app.beforeLoad) {
+    await app.beforeLoad(app);
+  }
   const appName = app.name;
   const appNS: any = getMFAppVar(appName);
   let container: any = window[appNS];
@@ -201,6 +208,9 @@ async function importApp(app: MFApp, module: string) {
   // @ts-ignore
   await container.init(__webpack_share_scopes__.default);
   const Module = await container.get(module);
+  if (app.afterLoad) {
+    await app.afterLoad(app);
+  }
   const m = Module();
   return m;
 }
