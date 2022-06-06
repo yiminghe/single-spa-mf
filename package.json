@@ -20,7 +20,7 @@
     "@babel/core": "7.x",
     "@tsconfig/recommended": "^1.0.1",
     "concurrently": "6.x",
-    "cypress": "^9.6.0",
+    "cypress": "^10.x",
     "prettier": "2.x",
     "semver": "7.x",
     "typescript": "4.x"

@@ -124,7 +124,7 @@ window.addEventListener(
           promises.push(errors[name].mountPromise);
           promises.push(
             app.error.unmount(errors[name].applicationElement) ||
-            resolvedPromise,
+              resolvedPromise,
           );
         }
         delete errors[name];

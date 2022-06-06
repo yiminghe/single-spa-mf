@@ -2450,7 +2450,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.12
+    single-spa-mf: 0.0.13
     single-spa-react: 4.x
     tailwindcss: ^3.0.11
     webpack: 5.x
@@ -3781,9 +3781,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^9.6.0":
-  version: 9.6.1
-  resolution: "cypress@npm:9.6.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fcypress%2F-%2Fcypress-9.6.1.tgz"
+"cypress@npm:^10.x":
+  version: 10.0.2
+  resolution: "cypress@npm:10.0.2::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fcypress%2F-%2Fcypress-10.0.2.tgz"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -3829,7 +3829,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 3d464346f30b164c10947e332e5c8095c1f53b946d378c18a09e7591b0aadb331062d880505a228ff1d996d37c9e7b4e8a9f2308871a00442d9171a1718f7fa4
+  checksum: 7c4c07b832138a5c923b5092284d09249ec36a68d90cbacdc79f9fed97712d445c52b3314c23bdff26c4e5f41e1753dc2501f9664efb35c7313899d4bfa41afd
   languageName: node
   linkType: hard
 
@@ -6688,7 +6688,7 @@ __metadata:
     react-dom: 17.x
     react-is: 17.x
     react-router-dom: 6.x
-    single-spa-mf: 0.0.12
+    single-spa-mf: 0.0.13
     single-spa-react: 4.x
     tailwindcss: ^3.0.11
     webpack: 5.x
@@ -6849,7 +6849,7 @@ __metadata:
     "@babel/core": 7.x
     "@tsconfig/recommended": ^1.0.1
     concurrently: 6.x
-    cypress: ^9.6.0
+    cypress: ^10.x
     prettier: 2.x
     semver: 7.x
     typescript: 4.x
@@ -9386,7 +9386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@0.0.12, single-spa-mf@workspace:packages/single-spa-mf":
+"single-spa-mf@0.0.13, single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:
