@@ -15,6 +15,18 @@ module.exports = ({ dir, app, port, main, require }) => {
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
   const { resolve: r } = require;
 
+  const cssOptions = {
+    attributes:{
+      'data-app':app,
+    },
+    filename: `[name]${hash ? '.[contenthash:8]' : ''}.css`,
+  };
+  if (!main) {
+    cssOptions.insert = function (linkTag) {
+      window.__mfeStyleNodes[linkTag.dataset.app].appendChild(linkTag);
+    };
+  }
+
   const getStyleLoaders = (
     cssOptions,
   ) => {
@@ -98,7 +110,7 @@ module.exports = ({ dir, app, port, main, require }) => {
     },
 
     plugins: [
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin(cssOptions),
       new HtmlWebpackPlugin({
         publicPath: '/',
         template: `${dir}/public/index.html`,

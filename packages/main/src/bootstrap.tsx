@@ -6,7 +6,7 @@ import { publicPath } from 'common';
 // @ts-ignore
 import md5 from 'blueimp-md5';
 import './bootstrap.css';
-
+import { styles } from './styles';
 ReactDOM.render(<App />, document.getElementById('root'));
 
 const mainAppName = 'main';
@@ -75,6 +75,7 @@ function getMFAppMD5Key(app: string) {
 
 const apps: MFApp[] = appNames.map(([name, port]) => ({
   name,
+  beforeLoad: styles.beforeLoad,
   entry: async ({ entryName }: { entryName: string }) => {
     const path = `http://localhost:${port}`;
     let entry = `${path}/${entryName}`;
@@ -157,3 +158,17 @@ window.addEventListener('single-spa:app-change', (e: any) => {
   }
 });
 start();
+
+window.addEventListener('single-spa:app-change', (evt: any) => {
+  const { MOUNTED, NOT_MOUNTED } = evt.detail.appsByNewStatus;
+  for (const n of NOT_MOUNTED || []) {
+    if (n !== 'main') {
+      styles.afterUnmount(n);
+    }
+  }
+  for (const n of MOUNTED || []) {
+    if (n !== 'main') {
+      styles.beforeMount(n);
+    }
+  }
+});

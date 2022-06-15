@@ -21,7 +21,7 @@ export interface MFAppHandle {
 
 type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
-type AsyncFunction = (app: MFApp) => Promise<void>;
+type AsyncFunction = (app: MFApp) => Promise<void> | void;
 
 export interface MFApp {
   name: string;

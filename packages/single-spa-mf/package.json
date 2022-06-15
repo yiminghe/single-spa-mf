@@ -8,7 +8,7 @@
   "files": [
     "pkg"
   ],
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "src/index",
   "exports": {
     ".": "./src/index",

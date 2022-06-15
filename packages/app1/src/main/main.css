@@ -1,2 +1,6 @@
 @tailwind components;
 @tailwind utilities;
+
+.app1-p-2 {
+    color: red;
+}
