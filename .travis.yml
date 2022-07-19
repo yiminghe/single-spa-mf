@@ -10,8 +10,11 @@ node_js:
 before_install:
   - corepack enable
 
+install:
+  - yarn
+
 script:
-  - yarn build
-  - yarn start &
+  - yarn run build
+  - yarn run start &
   - yarn cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98
   - kill $(jobs -p) || true
