@@ -9,6 +9,7 @@ node_js:
 
 before_install:
   - corepack enable
+  - rm -rf yarn.lock
 
 install:
   - yarn
