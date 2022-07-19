@@ -9386,7 +9386,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-mf@0.0.13, single-spa-mf@workspace:packages/single-spa-mf":
+"single-spa-mf@npm:0.0.13":
+  version: 0.0.13
+  resolution: "single-spa-mf@npm:0.0.13::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fsingle-spa-mf%2F-%2Fsingle-spa-mf-0.0.13.tgz"
+  dependencies:
+    dom-element-getter-helpers: 1.x
+    single-spa: 5.x
+  checksum: e8a874da6b2be550c5d7514a1027f864f3e43c7f39be625ea67b80e15c56facaeec1195960d77e890cd745c92061743692d576705ef51685470857f47357c0c0
+  languageName: node
+  linkType: hard
+
+"single-spa-mf@workspace:packages/single-spa-mf":
   version: 0.0.0-use.local
   resolution: "single-spa-mf@workspace:packages/single-spa-mf"
   dependencies:
