@@ -11,7 +11,7 @@
     "react-is": "17.x",
     "react-router-dom": "6.x",
     "single-spa-mf": "0.0.13",
-    "single-spa-react": "4.x"
+    "single-spa-react": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "7.x",
