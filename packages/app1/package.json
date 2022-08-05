@@ -10,8 +10,8 @@
     "react-dom": "17.x",
     "react-is": "17.x",
     "react-router-dom": "6.x",
-    "single-spa-mf": "0.0.13",
-    "single-spa-react": "workspace:*"
+    "single-spa-mf": "workspace:*",
+    "single-spa-react": "4.x"
   },
   "devDependencies": {
     "@babel/core": "7.x",
