@@ -2545,6 +2545,38 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app2@workspace:packages/app2":
+  version: 0.0.0-use.local
+  resolution: "app2@workspace:packages/app2"
+  dependencies:
+    "@babel/core": 7.x
+    "@babel/preset-env": 7.x
+    "@babel/preset-react": 7.x
+    "@babel/preset-typescript": 7.x
+    "@types/react": 17.x
+    "@types/react-dom": 17.x
+    autoprefixer: ^10.4.1
+    babel-loader: 8.x
+    common: ~0.0.4
+    css-loader: 6.x
+    html-webpack-plugin: 5.x
+    mini-css-extract-plugin: 2.x
+    postcss: 8.x
+    postcss-loader: 6.x
+    react: 17.x
+    react-dom: 17.x
+    react-is: 17.x
+    react-router-dom: 6.x
+    single-spa-mf: "workspace:*"
+    single-spa-react: 4.x
+    tailwindcss: ^3.0.11
+    webpack: 5.x
+    webpack-cli: 4.x
+    webpack-dev-server: 4.x
+    webpack-manifest-plugin: ^4.0.2
+  languageName: unknown
+  linkType: soft
+
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"

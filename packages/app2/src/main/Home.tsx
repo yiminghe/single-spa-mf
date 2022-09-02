@@ -3,12 +3,12 @@ import { Button } from '../Button';
 
 export default ({ gotoIntro, gotoNone, gotoNone2 }: any) => (
   <>
-    <div className="app-title">app1 home</div>
-    <Button onClick={gotoIntro} data-btn="app1-home-intro">
-      goto app1 intro
+    <div className="app-title">app2 home</div>
+    <Button onClick={gotoIntro} data-btn="app2-home-intro">
+      goto app2 intro
     </Button>
 
-    <Button onClick={gotoNone} data-btn="app1-home-none">
+    <Button onClick={gotoNone} data-btn="app2-home-none">
       goto none
     </Button>
 

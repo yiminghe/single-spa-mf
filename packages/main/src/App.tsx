@@ -25,6 +25,9 @@ const App = () => {
         <Button onClick={onClick} data-href={publicPath + 'app1'}>
           app1
         </Button>
+        <Button onClick={onClick} data-href={publicPath + 'app2'}>
+          app2
+        </Button>
         <Button onClick={onClick} data-href={publicPath + 'notFound'}>
           notFound
         </Button>

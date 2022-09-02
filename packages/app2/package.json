@@ -1,0 +1,43 @@
+{
+  "name": "app2",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/react": "17.x",
+    "@types/react-dom": "17.x",
+    "common": "~0.0.4",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "react-is": "17.x",
+    "react-router-dom": "6.x",
+    "single-spa-mf": "workspace:*",
+    "single-spa-react": "4.x"
+  },
+  "devDependencies": {
+    "@babel/core": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-react": "7.x",
+    "@babel/preset-typescript": "7.x",
+    "autoprefixer": "^10.4.1",
+    "babel-loader": "8.x",
+    "css-loader": "6.x",
+    "html-webpack-plugin": "5.x",
+    "mini-css-extract-plugin": "2.x",
+    "postcss": "8.x",
+    "postcss-loader": "6.x",
+    "tailwindcss": "^3.0.11",
+    "webpack": "5.x",
+    "webpack-cli": "4.x",
+    "webpack-dev-server": "4.x",
+    "webpack-manifest-plugin": "^4.0.2"
+  },
+  "browserslist": {
+    "development": [
+      "last 2 Chrome versions"
+    ]
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "build": "rm -rf dist && BUILD=1 webpack --mode development"
+  }
+}

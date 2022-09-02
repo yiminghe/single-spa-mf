@@ -23,7 +23,7 @@ module.exports = ({ dir, app, port, main, require }) => {
   };
   if (!main) {
     cssOptions.insert = function (linkTag) {
-      window.__mfeStyleNodes[linkTag.dataset.app].appendChild(linkTag);
+      window.__addMFLink(linkTag);
     };
   }
 

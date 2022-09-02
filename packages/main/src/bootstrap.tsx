@@ -6,7 +6,12 @@ import { publicPath } from 'common';
 // @ts-ignore
 import md5 from 'blueimp-md5';
 import './bootstrap.css';
-import { styles } from './styles';
+import { getStyles } from './styles';
+
+const styles = getStyles({
+  enableShadowDOM: true,
+});
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 const mainAppName = 'main';
@@ -43,6 +48,7 @@ const error = {
 
 const appNames: [string, number][] = [
   ['app1', 3002],
+  ['app2', 3003],
   ['notFound', 3004],
 ];
 
