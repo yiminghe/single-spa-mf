@@ -1,5 +1,3 @@
-
-
 function cap(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
@@ -16,45 +14,45 @@ module.exports = ({ dir, app, port, main, require }) => {
   const { resolve: r } = require;
 
   const cssOptions = {
-    attributes:{
-      'data-app':app,
+    attributes: {
+      'data-app': app,
     },
     filename: `[name]${hash ? '.[contenthash:8]' : ''}.css`,
   };
   if (!main) {
     cssOptions.insert = function (linkTag) {
-      window.__addMFLink(linkTag);
+      if (window.__addMFLink) {
+        window.__addMFLink(linkTag);
+      } else {
+        document.head.appendChild(linkTag);
+      }
     };
   }
 
-  const getStyleLoaders = (
-    cssOptions,
-  ) => {
-    const loaders = [{
-      loader: MiniCssExtractPlugin.loader
-    },
-    {
-      loader: r('css-loader'),
-      options: cssOptions,
-    },
-    {
-      loader: r('postcss-loader'),
-      options: {
-        postcssOptions: {
-          ident: 'postcss',
-          plugins: [
-            r('autoprefixer'),
-            r('tailwindcss'),
-          ]
-        },
-        sourceMap: true,
+  const getStyleLoaders = (cssOptions) => {
+    const loaders = [
+      {
+        loader: MiniCssExtractPlugin.loader,
       },
-    },
+      {
+        loader: r('css-loader'),
+        options: cssOptions,
+      },
+      {
+        loader: r('postcss-loader'),
+        options: {
+          postcssOptions: {
+            ident: 'postcss',
+            plugins: [r('autoprefixer'), r('tailwindcss')],
+          },
+          sourceMap: true,
+        },
+      },
     ].filter(Boolean);
     return loaders;
   };
 
-  return ({
+  return {
     entry: `${dir}/src/entries/index`,
 
     mode: 'development',
@@ -91,12 +89,10 @@ module.exports = ({ dir, app, port, main, require }) => {
       rules: [
         {
           test: /\.(t|j)sx?$/,
-          loader: r('babel-loader'),
-          options: {
-            presets: [
-              r('@babel/preset-react'),
-              r('@babel/preset-typescript'),
-            ],
+          exclude: /(node_modules)/,
+          use: {
+            // `.swcrc` can be used to configure swc
+            loader: 'swc-loader',
           },
         },
         {
@@ -118,19 +114,15 @@ module.exports = ({ dir, app, port, main, require }) => {
       new WebpackManifestPlugin(),
       new ModuleFederationPlugin({
         ...mfWebpack.getMFAppConfig({ app }),
-        ...(main ? {} : {
-          exposes: {
-            ...mfWebpack.getMFExposes(`${dir}/src/main/Main`),
-          },
-        }),
-        shared: [
-          'react',
-          'react-dom',
-          'react-router-dom',
-          'single-spa-react',
-        ],
+        ...(main
+          ? {}
+          : {
+              exposes: {
+                ...mfWebpack.getMFExposes(`${dir}/src/main/Main`),
+              },
+            }),
+        shared: ['react', 'react-dom', 'react-router-dom', 'single-spa-react'],
       }),
-
     ],
-  })
+  };
 };

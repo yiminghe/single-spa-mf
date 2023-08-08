@@ -15,7 +15,7 @@ const Main = () => {
       <div>
         <Routes>
           <Route
-            path={publicPath + ''}
+            path={`${publicPath}`}
             element={
               <Suspense fallback={fallback}>
                 <Home />
@@ -23,14 +23,14 @@ const Main = () => {
             }
           />
           <Route
-            path={publicPath + 'intro'}
+            path={`${publicPath}intro`}
             element={
               <Suspense fallback={fallback}>
                 <Intro />
               </Suspense>
             }
           />
-          <Route path="*" element={<Navigate to={publicPath + ''} replace />} />
+          <Route path="*" element={<Navigate to={`${publicPath}`} replace />} />
         </Routes>
       </div>
     </BrowserRouter>

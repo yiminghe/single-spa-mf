@@ -10,19 +10,19 @@ const Intro = lazy(() => import('./Intro'));
 
 const App1Home = ({ publicPath, singleSpa }: any) => {
   const gotoIntro = useCallback(() => {
-    singleSpa.navigateToUrl(publicPath + 'app1/intro');
+    singleSpa.navigateToUrl(`${publicPath}app1/intro`);
   }, []);
 
   const gotoHome = useCallback(() => {
-    singleSpa.navigateToUrl(publicPath + 'app1');
+    singleSpa.navigateToUrl(`${publicPath}app1`);
   }, []);
 
   const gotoNone = useCallback(() => {
-    singleSpa.navigateToUrl(publicPath + 'app1/x');
+    singleSpa.navigateToUrl(`${publicPath}app1/x`);
   }, []);
 
   const gotoNone2 = useCallback(() => {
-    singleSpa.navigateToUrl(publicPath + 'x');
+    singleSpa.navigateToUrl(`${publicPath}x`);
   }, []);
 
   return (
@@ -31,7 +31,7 @@ const App1Home = ({ publicPath, singleSpa }: any) => {
         <div>
           <Routes>
             <Route
-              path={publicPath + 'app1'}
+              path={`${publicPath}app1`}
               element={
                 <Suspense fallback={fallback}>
                   <Home
@@ -43,7 +43,7 @@ const App1Home = ({ publicPath, singleSpa }: any) => {
               }
             />
             <Route
-              path={publicPath + 'app1/intro'}
+              path={`${publicPath}app1/intro`}
               element={
                 <Suspense fallback={fallback}>
                   <Intro gotoHome={gotoHome} />
@@ -52,7 +52,7 @@ const App1Home = ({ publicPath, singleSpa }: any) => {
             />
             <Route
               path="*"
-              element={<Navigate to={publicPath + 'app1'} replace />}
+              element={<Navigate to={`${publicPath}app1`} replace />}
             />
           </Routes>
         </div>

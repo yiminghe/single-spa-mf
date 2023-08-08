@@ -7,7 +7,7 @@ A micro frontend solution based on single-spa and module federation
 [![Build Status](https://app.travis-ci.com/yiminghe/single-spa-mf.svg?branch=main)](https://app.travis-ci.com/github/yiminghe/single-spa-mf)
 
 ```
-yarn add single-spa-mf
+npm install single-spa-mf
 ```
 
 ### API
@@ -63,14 +63,11 @@ export declare const getMFExposes: (mod: string) => {
 react + react-router + tailwindcss + single-spa + module federation + yarn3
 
 ```
-nvm install 16.13.1
+nvm install 18.17.0
 corepack enable
-yarn
-yarn dlx @yarnpkg/sdks vscode
-yarn plugin import typescript
-yarn plugin import version
-yarn build
-yarn start
+pnpm i
+pnpm build
+pnpm start
 ```
 
 main app: http://localhost:3001/

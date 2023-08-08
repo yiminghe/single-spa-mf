@@ -98,7 +98,7 @@ const apps: MFApp[] = appNames.map(([name, port]) => ({
     if (current !== contentMd5) {
       localStorage.setItem(key, contentMd5);
     }
-    entry += '?' + contentMd5;
+    entry += `?${contentMd5}`;
     return entry;
   },
   activeWhen: getActiveFn(name),
@@ -147,7 +147,7 @@ window.addEventListener('single-spa:before-mount-routing-event', (e: any) => {
   }
 });
 
-let reported: Record<string, boolean> = {};
+const reported: Record<string, boolean> = {};
 window.addEventListener('single-spa:app-change', (e: any) => {
   const status = e.detail.newAppStatuses;
   const keys = Object.keys(status);

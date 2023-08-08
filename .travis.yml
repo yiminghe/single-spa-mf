@@ -1,20 +1,20 @@
 language: node_js
 
 notifications:
-    email:
-        - yiminghe@gmail.com
+  email:
+    - yiminghe@gmail.com
 
 node_js:
-  - 16.13.1
+  - 18.17.0
 
 before_install:
   - corepack enable
 
 install:
-  - yarn
+  - pnpm i
 
 script:
-  - yarn run build
-  - yarn run start &
-  - yarn cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98
+  - pnpm build
+  - pnpm start &
+  - pnpm cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98
   - kill $(jobs -p) || true

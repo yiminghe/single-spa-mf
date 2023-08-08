@@ -39,7 +39,7 @@ export interface MFApp {
 
 type MFApps = Record<string, MFApp>;
 
-let apps: MFApps = {};
+const apps: MFApps = {};
 
 async function load<T>(
   fn: (e: { name: string }) => Promise<T>,
@@ -51,7 +51,7 @@ async function load<T>(
   }
   const applicationElement = getApplicationElement(app)!;
   let showed: Promise<void> | undefined;
-  let loadingTimeout = setTimeout(() => {
+  const loadingTimeout = setTimeout(() => {
     if (app?.loader) {
       showed = app.loader.mount(applicationElement) || resolvedPromise;
     }
@@ -223,7 +223,7 @@ function loadScript(url: string, ns: string) {
     const scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
       const s = scripts[i];
-      if (s.getAttribute('src') == url || s.getAttribute(dataKey) == ns) {
+      if (s.getAttribute('src') === url || s.getAttribute(dataKey) === ns) {
         script = s;
         break;
       }
@@ -246,13 +246,13 @@ function loadScript(url: string, ns: string) {
           script.onload = null;
           script.onerror = null;
           clearTimeout(timeout);
-          script.parentNode && script.parentNode.removeChild(script);
+          script.parentNode?.removeChild(script);
           if (['timeout', 'error'].includes(event.type)) {
             reject(event);
           } else {
             resolve(event);
           }
-          prev && prev(event);
+          prev?.(event);
         }
       };
       const timeout = setTimeout(() => {

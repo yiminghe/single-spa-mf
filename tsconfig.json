@@ -1,13 +1,14 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
-    "lib": ["ESNext","DOM"],
+    "lib": ["ESNext", "DOM"],
     "jsx": "preserve",
     "strictNullChecks": true,
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "isolatedModules": true,
-    "resolveJsonModule":true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "moduleResolution": "node"
   }
 }

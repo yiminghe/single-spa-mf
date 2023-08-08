@@ -1,0 +1,20 @@
+{
+  "formatter": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "useValidAnchor": "off"
+      }
+    }
+  }
+}

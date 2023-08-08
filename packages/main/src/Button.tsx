@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Button = (props) => (
+export const Button = (props: any) => (
   <span
     {...props}
     className={`

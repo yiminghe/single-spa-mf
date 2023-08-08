@@ -1,30 +1,28 @@
 {
   "name": "micro-frontend-demo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "prepack": "yarn build",
-    "prepare": "yarn build",
-    "pub": "yarn workspace single-spa-mf run pub",
-    "build": "yarn workspace single-spa-mf run build",
-    "format": "prettier --write \"packages/**/*.{js,tsx,ts,jsx}\"",
-    "reinstall": "rm -rf node_modules yarn.lock && ayarn",
-    "start:app": "yarn workspace main start",
-    "start:app1": "yarn workspace app1 start",
-    "start:app2": "yarn workspace app2 start",
-    "start": "concurrently 'yarn:start:*'",
+    "lint": "pnpm run -r lint",
+    "prepack": "pnpm build",
+    "prepare": "pnpm build",
+    "pub": "pnpm --filter single-spa-mf run pub",
+    "build": "pnpm --filter single-spa-mf run build",
+    "postinstall": "cp scripts/git-hooks/pre-commit .git/hooks/pre-commit",
+    "format": "cd scripts && npm run format",
+    "format:staged": "cd scripts && npm run format:staged",
+    "reinstall": "rm -rf node_modules pnpm-lock.yaml && pnpm",
+    "start:app": "pnpm --filter main start",
+    "start:app1": "pnpm --filter app1 start",
+    "start:app2": "pnpm --filter app2 start",
+    "start": "pnpm -w --parallel '/^start:.*/'",
     "test": "cypress run"
   },
   "devDependencies": {
-    "@babel/core": "7.x",
+    "semver": "6.x",
+    "rome": "12.x",
     "@tsconfig/recommended": "^1.0.1",
-    "concurrently": "6.x",
     "cypress": "^10.x",
-    "prettier": "2.x",
-    "semver": "7.x",
-    "typescript": "4.x"
+    "typescript": "5.x"
   },
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "pnpm@8.6.12"
 }

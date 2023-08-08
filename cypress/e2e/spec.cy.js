@@ -19,23 +19,20 @@ describe('single-spa-mf', () => {
     cy.url().should('to.equal', `${baseUrl}/app1`);
     cy.get('#single-spa-application\\:main').should(($el) => {
       expect($el[0].innerHTML).to.equal('');
-    })
+    });
     cy.get('#single-spa-application\\:app1').contains('app1 home');
 
     cy.get('[data-btn="app1-home-intro"]').click();
     cy.url().should('to.equal', `${baseUrl}/app1/intro`);
     cy.get('#single-spa-application\\:app1').contains('app1 intro');
 
-
     cy.get('[data-btn="app1-intro-home"]').click();
     cy.url().should('to.equal', `${baseUrl}/app1`);
     cy.get('#single-spa-application\\:app1').contains('app1 home');
 
-
     cy.get('[data-btn="app1-home-none"]').click();
     cy.url().should('to.equal', `${baseUrl}/app1`);
     cy.get('#single-spa-application\\:app1').contains('app1 home');
-
 
     cy.get('[data-btn="home-none"]').click();
     cy.url().should('to.equal', `${baseUrl}/`);

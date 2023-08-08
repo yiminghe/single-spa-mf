@@ -5,7 +5,7 @@ export default () => {
     <>
       <div>
         <h1>app2 app</h1>
-        <div id="single-spa-application:app2"></div>
+        <div id="single-spa-application:app2" />
       </div>
     </>
   );

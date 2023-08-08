@@ -2,5 +2,8 @@
   "name": "common",
   "private": true,
   "version": "0.0.4",
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "tsc --noEmit && rome check src"
+  }
 }

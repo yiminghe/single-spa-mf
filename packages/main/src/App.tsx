@@ -16,23 +16,23 @@ const App = () => {
     <>
       <h1>main app</h1>
       <div>
-        <Button onClick={onClick} data-href={publicPath + ''}>
+        <Button onClick={onClick} data-href={`${publicPath}`}>
           home
         </Button>{' '}
-        <Button onClick={onClick} data-href={publicPath + 'intro'}>
+        <Button onClick={onClick} data-href={`${publicPath}intro`}>
           intro
         </Button>{' '}
-        <Button onClick={onClick} data-href={publicPath + 'app1'}>
+        <Button onClick={onClick} data-href={`${publicPath}app1`}>
           app1
         </Button>
-        <Button onClick={onClick} data-href={publicPath + 'app2'}>
+        <Button onClick={onClick} data-href={`${publicPath}app2`}>
           app2
         </Button>
-        <Button onClick={onClick} data-href={publicPath + 'notFound'}>
+        <Button onClick={onClick} data-href={`${publicPath}notFound`}>
           notFound
         </Button>
       </div>
-      <div id="app-content"></div>
+      <div id="app-content" />
     </>
   );
 };

@@ -1,0 +1,14 @@
+{
+  "name": "infra",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "prettier-plugin-tailwindcss": "0.2.x",
+    "prettier": "2.x",
+    "pretty-quick": "3.x"
+  },
+  "scripts": {
+    "format": "prettier --config ../prettier.config.js --ignore-path ../.prettierignore ../ --write",
+    "format:staged": "pretty-quick --staged"
+  }
+}

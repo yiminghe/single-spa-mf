@@ -1,2 +1,63 @@
-dist 
+#-------------------------------------------------------------------------------------------------------------------
+# Keep this section in sync with .gitignore
+#-------------------------------------------------------------------------------------------------------------------
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks
+!/.yarn/versions
+
+# Swap the comments on the following lines if you don't wish to use zero-installs
+# Documentation here: https://yarnpkg.com/features/zero-installs
+#!/.yarn/cache
+/.pnp.*
+
+
+# testing
+/coverage
+
+# production
+build
 pkg
+dist
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+*.log
+*.aes
+cypress/screenshots
+cypress/videos
+cypress/logs
+cypress/fixtures/profile.json
+cypress/fixtures/users.json
+.history
+
+#-------------------------------------------------------------------------------------------------------------------
+# Prettier-specific overrides
+#-------------------------------------------------------------------------------------------------------------------
+
+CHANGELOG.*
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+shrinkwrap.json
+
+# Prettier reformats code blocks inside Markdown, which affects rendered output
+*.md
