@@ -13,7 +13,7 @@
   },
   "scripts": {
     "lint": "tsc --noEmit && rome check src",
-    "pub": "yarn run build && cd pkg && npm publish",
+    "pub": "npm run build && cd pkg && npm publish",
     "build": "node scripts/build"
   },
   "devDependencies": {

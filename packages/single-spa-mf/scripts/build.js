@@ -13,6 +13,8 @@ fs.mkdirSync(r('../pkg'));
 const pkg = require('../package.json');
 
 delete pkg.exports;
+delete pkg.devDependencies;
+delete pkg.scripts;
 
 pkg.main = 'dist-node/index.js';
 pkg.module = 'dist-web/index.js';
