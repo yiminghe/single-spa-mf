@@ -1,0 +1,16 @@
+{
+  "module": {
+    "type": "es6"
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    }
+  },
+  "env": {
+    "targets": {
+      "chrome": "79"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 3bae68ebcd5db3b04cb6ad41116103dd0cee94c5..0000000000000000000000000000000000000000
+diff --git a/typings/single-spa.d.ts b/typings/single-spa.d.ts
+index 57810bc02f7488bfeff6572bb286149522079a10..bb7a41c1aa0935b36237b076f3119f11c86755aa 100644
+--- a/typings/single-spa.d.ts
++++ b/typings/single-spa.d.ts
+@@ -1,4 +1,4 @@
+-declare module "single-spa" {
++
+   interface CustomProps {
+     [str: string]: any;
+     [num: number]: any;
+@@ -233,4 +233,3 @@ declare module "single-spa" {
+     path: string,
+     exactMatch?: boolean
+   ): ActivityFn;
+\ No newline at end of file
+-}

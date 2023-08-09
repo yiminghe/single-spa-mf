@@ -14,6 +14,9 @@ export { webpack };
 
 const resolvedPromise = Promise.resolve();
 
+/**
+ *@public
+ */
 export interface MFAppHandle {
   mount: (el: HTMLElement) => Promise<void> | void;
   unmount: (el: HTMLElement) => Promise<void> | void;
@@ -23,6 +26,9 @@ type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
 type AsyncFunction = (app: MFApp) => Promise<void> | void;
 
+/**
+ *@public
+ */
 export interface MFApp {
   name: string;
   activeWhen: SingleSpaConfig['activeWhen'];
@@ -139,6 +145,9 @@ window.addEventListener(
   },
 );
 
+/**
+ *@public
+ */
 export function registerMFApplications(appArray: MFApp[]) {
   for (const app of appArray) {
     const appName = app.name;

@@ -42,3 +42,6 @@ cypress/logs
 cypress/fixtures/profile.json
 cypress/fixtures/users.json
 .history
+
+temp
+tsdoc-metadata.json

@@ -18,11 +18,16 @@
     "test": "cypress run"
   },
   "devDependencies": {
-    "semver": "6.x",
-    "rome": "12.x",
     "@tsconfig/recommended": "^1.0.1",
     "cypress": "^10.x",
+    "rome": "12.x",
+    "semver": "6.x",
     "typescript": "5.x"
   },
-  "packageManager": "pnpm@8.6.12"
+  "packageManager": "pnpm@8.6.12",
+  "pnpm": {
+    "patchedDependencies": {
+      "single-spa@5.9.5": "patches/single-spa@5.9.5.patch"
+    }
+  }
 }

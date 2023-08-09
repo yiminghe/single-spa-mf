@@ -2,6 +2,9 @@
   "formatter": {
     "enabled": false
   },
+  "files": {
+    "ignore": ["src/tsdoc-metadata.json"]
+  },
   "linter": {
     "enabled": true,
     "rules": {

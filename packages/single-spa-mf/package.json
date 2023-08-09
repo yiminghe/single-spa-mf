@@ -17,49 +17,12 @@
   "scripts": {
     "lint": "tsc --noEmit && rome check src",
     "pub": "yarn run build && cd pkg && npm publish",
-    "build": "pika-pack build && cp scripts/webpack.* pkg"
-  },
-  "@pika/pack": {
-    "pipeline": [
-      [
-        "pika-plugin-ts-types",
-        {
-          "args": [
-            "--rootDir",
-            "src"
-          ],
-          "tsconfig": "tsconfig.build.json"
-        }
-      ],
-      [
-        "pika-plugin-build-web-babel",
-        {
-          "preserveModules": true,
-          "format": "cjs",
-          "sourcemap": false
-        }
-      ],
-      [
-        "pika-plugin-build-web-babel",
-        {
-          "preserveModules": true,
-          "sourcemap": false
-        }
-      ],
-      [
-        "pika-plugin-clean-dist-src"
-      ]
-    ]
+    "build": "node scripts/build"
   },
   "devDependencies": {
-    "@babel/core": "7.x",
-    "@babel/preset-env": "7.x",
-    "@babel/preset-react": "7.x",
-    "@babel/preset-typescript": "7.x",
-    "@pika/pack": "^0.5.0",
-    "pika-plugin-build-web-babel": "^0.11.2",
-    "pika-plugin-clean-dist-src": "^0.1.3",
-    "pika-plugin-ts-types": "^0.1.5"
+    "@microsoft/api-extractor": "7.x",
+    "@swc/core": "1.3.x",
+    "@swc/cli": "0.1.x"
   },
   "dependencies": {
     "dom-element-getter-helpers": "1.x",
