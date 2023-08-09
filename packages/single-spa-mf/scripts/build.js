@@ -40,14 +40,14 @@ execSync('api-extractor run --local --diagnostics', { stdio: 'inherit' });
 
 const md = fs.readFileSync(r('../etc/single-spa-mf.api.md'), 'utf-8');
 
-let readme = fs.readFileSync(r('../readme.md'), 'utf-8');
+let readme = fs.readFileSync(r('../README.md'), 'utf-8');
 
 const start = readme.indexOf('## API Report File for "single-spa-mf"');
 const end = readme.indexOf('## demo');
 
 readme = readme.slice(0, start) + md + readme.slice(end);
 
-fs.writeFileSync(r('../readme.md'), readme);
+fs.writeFileSync(r('../README.md'), readme);
 fs.writeFileSync(r('../../../README.md'), readme);
 
-fs.copyFileSync(r('../readme.md'), r('../pkg', 'README.md'));
+fs.copyFileSync(r('../README.md'), r('../pkg', 'README.md'));

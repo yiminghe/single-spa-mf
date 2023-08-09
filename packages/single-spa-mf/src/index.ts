@@ -22,9 +22,9 @@ export interface MFAppHandle {
   unmount: (el: HTMLElement) => Promise<void> | void;
 }
 
-type SingleSpaConfig = Parameters<typeof registerApplication>[0];
+export type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
-type AsyncFunction = (app: MFApp) => Promise<void> | void;
+export type AsyncFunction = (app: MFApp) => Promise<void> | void;
 
 /**
  *@public

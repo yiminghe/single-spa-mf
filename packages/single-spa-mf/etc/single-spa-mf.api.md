@@ -8,6 +8,9 @@ import { LifeCycles } from 'single-spa';
 import { registerApplication } from 'single-spa';
 
 // @public (undocumented)
+export type AsyncFunction = (app: MFApp) => Promise<void> | void;
+
+// @public (undocumented)
 const getMFAppConfig: ({ app }: {
     app: string;
 }) => {
@@ -22,8 +25,6 @@ const getMFExposes: (mod: string) => {
 
 // @public (undocumented)
 export interface MFApp {
-    // Warning: (ae-forgotten-export) The symbol "SingleSpaConfig" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     activeWhen: SingleSpaConfig['activeWhen'];
     // (undocumented)
@@ -31,8 +32,6 @@ export interface MFApp {
     app?: (e: {
         name: string;
     }) => Promise<LifeCycles<any>>;
-    // Warning: (ae-forgotten-export) The symbol "AsyncFunction" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     beforeLoad?: AsyncFunction;
     // (undocumented)
@@ -59,6 +58,9 @@ export interface MFAppHandle {
 
 // @public (undocumented)
 export function registerMFApplications(appArray: MFApp[]): void;
+
+// @public (undocumented)
+export type SingleSpaConfig = Parameters<typeof registerApplication>[0];
 
 declare namespace webpack {
     export {
