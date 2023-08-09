@@ -11,6 +11,7 @@ A micro frontend solution based on single-spa and module federation
 npm install single-spa-mf
 ```
 
+
 ### API
 
 #### single-spa-mf
