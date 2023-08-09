@@ -4,7 +4,7 @@ A micro frontend solution based on single-spa and module federation
 
 [![NPM version](https://badge.fury.io/js/single-spa-mf.png)](http://badge.fury.io/js/single-spa-mf)
 [![NPM downloads](http://img.shields.io/npm/dm/single-spa-mf.svg)](https://npmjs.org/package/single-spa-mf)
-[![Build Status](https://app.travis-ci.com/yiminghe/single-spa-mf.svg?branch=main)](https://app.travis-ci.com/github/yiminghe/single-spa-mf)
+![Build Status](https://github.com/yiminghe/single-spa-md/actions/workflows/ci.yaml/badge.svg)
 
 ```
 npm install single-spa-mf
