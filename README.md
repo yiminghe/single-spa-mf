@@ -62,13 +62,12 @@ export declare const getMFExposes: (mod: string) => {
 
 ### demo
 
-react + react-router + tailwindcss + single-spa + module federation + yarn3
+react + react-router + tailwindcss + single-spa + module federation + pnpm8
 
 ```
 nvm install 18.17.0
 corepack enable
 pnpm i
-pnpm build
 pnpm start
 ```
 
