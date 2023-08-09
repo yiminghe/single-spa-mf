@@ -45,6 +45,5 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - run: pnpm build
       - run: pnpm start &
       - run: pnpm cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98
