@@ -16,7 +16,7 @@
     "start:app2": "pnpm --filter app2 start",
     "start": "pnpm -w --parallel '/^start:.*/'",
     "test:ci": "start-server-and-test start http://127.0.0.1:3001 test:record",
-    "test:record": "cypress run --record --key d5388205-8b6f-409c-940f-5402b59dcb98",
+    "test:record": "cypress run --record --key $CYPRESS_RECORD_KEY",
     "test": "cypress run"
   },
   "devDependencies": {
