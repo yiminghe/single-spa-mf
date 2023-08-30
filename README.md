@@ -34,7 +34,7 @@ const getMFAppConfig: ({ app }: {
 
 // @public (undocumented)
 const getMFExposes: (mod: string) => {
-    [x: string]: string;
+    Single_SPA_MF_main: string;
 };
 
 // @public (undocumented)

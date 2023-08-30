@@ -1,3 +1,4 @@
+// @ts-ignore
 import config from '../../cypress.config';
 
 const { baseUrl } = config.e2e;
