@@ -1,8 +1,10 @@
 {
   "extends": "@tsconfig/recommended",
+  "include": ["**/*.ts"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "jsx": "preserve",
+    "types": ["cypress", "node"],
     "strictNullChecks": true,
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
